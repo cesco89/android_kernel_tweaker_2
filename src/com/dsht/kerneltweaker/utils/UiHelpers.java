@@ -113,6 +113,7 @@ public class UiHelpers {
                     }else {
                         if(pref.isCustomCommand()) {
                             String command = String.format(pref.getFilePath(), values[position]);
+                            mCMD.runCustomCommand(command);
                         }else {
                             mCMD.setValuesShell(pref.getFilePath(), values[position]);
                         }
