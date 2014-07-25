@@ -42,5 +42,17 @@
             android:summary="@string/fcharge_desc"
             android:title="@string/fcharge_title" />
     </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory
+        android:key="key_kernel_features"
+        android:title="@string/category_kernel_features">
+        <com.dsht.kerneltweaker.widgets.EditPreference
+            android:key="key_temp_threshold"
+            android:summary="@string/temp_threshold_desc"
+            android:title="@string/temp_threshold_title"/>
+        <com.dsht.kerneltweaker.widgets.CheckBoxPreference
+            android:key="key_intelliplug"
+            android:summary="@string/intelliplug_desc"
+            android:title="@string/intelliplug_title" />
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
 
 </PreferenceScreen>

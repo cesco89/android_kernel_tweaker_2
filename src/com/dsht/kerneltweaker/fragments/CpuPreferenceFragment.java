@@ -70,7 +70,7 @@ public class CpuPreferenceFragment extends ObservablePreferenceFragment implemen
         mCpuMax.setValue(mConfig.getCurrentMaxFreq());
         mCpuMax.setDialog(mUiHelpers.buildListPreferenceDialog(mCpuMax, mConfig.getCpuFreqEntries(), mConfig.getCpuFreqValues()));
         mCpuMax.setMulticore(true);
-        mCpuMax.setisMaxFreq(true);
+        mCpuMax.setIsMaxFreq(true);
 
         mCpuMin.setEntries(mConfig.getCpuFreqEntries());
         mCpuMin.setValues(mConfig.getCpuFreqValues());
@@ -78,7 +78,7 @@ public class CpuPreferenceFragment extends ObservablePreferenceFragment implemen
         mCpuMin.setValue(mConfig.getCurrentMinFreq());
         mCpuMin.setDialog(mUiHelpers.buildListPreferenceDialog(mCpuMin, mConfig.getCpuFreqEntries(), mConfig.getCpuFreqValues()));
         mCpuMin.setMulticore(true);
-        mCpuMin.setisMaxFreq(false);
+        mCpuMin.setIsMaxFreq(false);
 
         mCpuGovernor.setEntries(mConfig.getCpuGovernors());
         mCpuGovernor.setValues(mConfig.getCpuGovernors());

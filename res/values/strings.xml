@@ -107,6 +107,11 @@
     <string name="category_kernel_net">Network</string>
     <string name="tcp_title">TCP Congestion algorithm</string>
     <string name="tcp_desc">Select TCP algorithm</string>
+    <string name="category_kernel_features">Kernel features</string>
+    <string name="temp_threshold_title">Temp Threshold</string>
+    <string name="temp_threshold_desc">Set Themp Threshold</string>
+    <string name="intelliplug_title">Intelliplug</string>
+    <string name="intelliplug_desc">Enable/Disable Intelliplug</string>
     
     <!-- CARDS -->
     <string name="header_one">UI Creator</string>

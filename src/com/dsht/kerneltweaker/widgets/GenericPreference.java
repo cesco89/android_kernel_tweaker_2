@@ -324,7 +324,7 @@ public class GenericPreference extends Preference{
         return this.isMulticore;
     }
 
-    public void setisMaxFreq(boolean max) {
+    public void setIsMaxFreq(boolean max) {
         this.maxFreq = max;
     }
 

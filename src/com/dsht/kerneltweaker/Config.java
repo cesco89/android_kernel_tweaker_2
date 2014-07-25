@@ -141,6 +141,9 @@ public class Config {
     public static final String KEY_KERNEL_CATEGORY_IO = "key_kernel_io";
     public static final String KEY_KERNEL_CATEGORY_POWER = "key_kernel_power";
     public static final String KEY_KERNEL_CATEGORY_NET = "key_kernel_net";
+    public static final String KEY_TEMP_THRESHOLD = "key_temp_threshold";
+    public static final String KEY_KERNEL_CATEGORY_FEATURES ="key_kernel_features";
+    public static final String KEY_INTELLIPLUG = "key_intelliplug";
 
     //CPU VALUES
     private String mCpuMaxFreq;

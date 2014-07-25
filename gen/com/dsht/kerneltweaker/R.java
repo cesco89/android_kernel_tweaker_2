@@ -1650,18 +1650,19 @@ containing a value of this type.
         public static final int button_apply=0x7f0b0059;
         public static final int button_cancel=0x7f0b005a;
         public static final int cancel=0x7f0b0045;
-        public static final int card_edit_desc=0x7f0b0070;
-        public static final int card_edit_title=0x7f0b006f;
-        public static final int card_name=0x7f0b0072;
-        public static final int card_name_desc=0x7f0b0073;
-        public static final int card_selection_desc=0x7f0b006e;
-        public static final int card_selection_title=0x7f0b006d;
-        public static final int card_summary=0x7f0b0074;
-        public static final int card_summary_desc=0x7f0b0075;
-        public static final int card_value_off=0x7f0b007d;
-        public static final int card_value_off_desc=0x7f0b007e;
-        public static final int card_value_on=0x7f0b007b;
-        public static final int card_value_on_desc=0x7f0b007c;
+        public static final int card_edit_desc=0x7f0b0075;
+        public static final int card_edit_title=0x7f0b0074;
+        public static final int card_name=0x7f0b0077;
+        public static final int card_name_desc=0x7f0b0078;
+        public static final int card_selection_desc=0x7f0b0073;
+        public static final int card_selection_title=0x7f0b0072;
+        public static final int card_summary=0x7f0b0079;
+        public static final int card_summary_desc=0x7f0b007a;
+        public static final int card_value_off=0x7f0b0082;
+        public static final int card_value_off_desc=0x7f0b0083;
+        public static final int card_value_on=0x7f0b0080;
+        public static final int card_value_on_desc=0x7f0b0081;
+        public static final int category_kernel_features=0x7f0b006b;
         public static final int category_kernel_io=0x7f0b005e;
         /**  KERNEL 
          */
@@ -1722,8 +1723,8 @@ containing a value of this type.
         public static final int header_kernel=0x7f0b0026;
         /**  CARDS 
          */
-        public static final int header_one=0x7f0b006b;
-        public static final int header_one_desc=0x7f0b006c;
+        public static final int header_one=0x7f0b0070;
+        public static final int header_one_desc=0x7f0b0071;
         public static final int header_stats=0x7f0b0021;
         public static final int header_stats_cpu=0x7f0b0022;
         public static final int header_user=0x7f0b0028;
@@ -1733,14 +1734,16 @@ containing a value of this type.
         public static final int info_temp_batt=0x7f0b003f;
         public static final int info_temp_cpu=0x7f0b003e;
         public static final int info_temperatures=0x7f0b003d;
+        public static final int intelliplug_desc=0x7f0b006f;
+        public static final int intelliplug_title=0x7f0b006e;
         public static final int io=0x7f0b0044;
         public static final int label_default=0x7f0b0013;
-        public static final int list_entries_separator=0x7f0b0079;
-        public static final int list_entries_separator_desc=0x7f0b007a;
-        public static final int list_path=0x7f0b0071;
-        public static final int list_path_desc=0x7f0b0076;
-        public static final int list_path_entries=0x7f0b0077;
-        public static final int list_path_entries_desc=0x7f0b0078;
+        public static final int list_entries_separator=0x7f0b007e;
+        public static final int list_entries_separator_desc=0x7f0b007f;
+        public static final int list_path=0x7f0b0076;
+        public static final int list_path_desc=0x7f0b007b;
+        public static final int list_path_entries=0x7f0b007c;
+        public static final int list_path_entries_desc=0x7f0b007d;
         public static final int logcat_desc=0x7f0b005d;
         public static final int logcat_title=0x7f0b005c;
         public static final int mt_refresh=0x7f0b0053;
@@ -1762,6 +1765,8 @@ containing a value of this type.
         public static final int select=0x7f0b001f;
         public static final int tcp_desc=0x7f0b006a;
         public static final int tcp_title=0x7f0b0069;
+        public static final int temp_threshold_desc=0x7f0b006d;
+        public static final int temp_threshold_title=0x7f0b006c;
         public static final int time_in_state=0x7f0b003a;
         public static final int total_state_time=0x7f0b003c;
         public static final int unused_cpu_states=0x7f0b003b;
