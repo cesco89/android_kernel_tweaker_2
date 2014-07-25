@@ -1,13 +1,10 @@
 package com.dsht.kerneltweaker;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import com.dsht.kerneltweaker.database.Category;
 import com.dsht.kerneltweaker.database.DatabaseHelpers;
 import com.dsht.kerneltweaker.utils.Helpers;
-import com.dsht.kerneltweaker.utils.UvItem;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;

@@ -12,7 +12,6 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -21,8 +20,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceScreen;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -338,6 +335,7 @@ public class UiHelpers {
     }
 
 
+    @SuppressWarnings("rawtypes")
     public void startActivity(Activity act, Class c, String bundleValue, String bundleKey) {
         Bundle b = new Bundle();
         b.putString(bundleKey, bundleValue);
@@ -347,6 +345,7 @@ public class UiHelpers {
         act.overridePendingTransition(R.anim.anim_slide_left_in, R.anim.anim_slide_right_out);
     }
 
+    @SuppressWarnings("rawtypes")
     public void startActivity(Activity act, Class c, int bundleValue, String bundleKey) {
         Bundle b = new Bundle();
         b.putInt(bundleKey, bundleValue);
@@ -356,6 +355,7 @@ public class UiHelpers {
         act.overridePendingTransition(R.anim.anim_slide_left_in, R.anim.anim_slide_right_out);
     }
 
+    @SuppressWarnings("rawtypes")
     public void startActivity(Activity act, Class c) {
         Intent i = new Intent(act, c);
         act.startActivity(i);

@@ -2,13 +2,11 @@ package com.dsht.kerneltweaker.fragments;
 
 import com.dsht.kerneltweaker.Config;
 import com.dsht.kerneltweaker.R;
-import com.dsht.kerneltweaker.activities.MainActivity;
 import com.dsht.kerneltweaker.utils.UiHelpers;
 import com.dsht.kerneltweaker.widgets.GreenPreferenceCategory;
 import com.dsht.kerneltweaker.widgets.MenuPreference;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;

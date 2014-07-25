@@ -3,15 +3,14 @@ package com.dsht.kerneltweaker.utils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeoutException;
-
+import android.annotation.SuppressLint;
 import android.util.Log;
-
 import com.dsht.kerneltweaker.Config;
-import com.dsht.kernetweaker.cmdprocessor.CMDProcessor;
 import com.stericson.RootTools.RootTools;
 import com.stericson.RootTools.exceptions.RootDeniedException;
 import com.stericson.RootTools.execution.CommandCapture;
 
+@SuppressLint("DefaultLocale")
 public class CMDHelpers {
     
     private String echo_regex = "echo \"%s\" > %s";

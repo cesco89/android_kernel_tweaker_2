@@ -1,8 +1,6 @@
 package com.dsht.kerneltweaker.widgets;
 
 import com.dsht.kerneltweaker.R;
-import com.dsht.kerneltweaker.utils.UvItem;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.util.AttributeSet;

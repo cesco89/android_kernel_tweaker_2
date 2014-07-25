@@ -4,7 +4,6 @@ import com.dsht.kerneltweaker.interfaces.OnCompleteListener;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.preference.PreferenceFragment;
 
 public class ObservableFragment extends Fragment{
 

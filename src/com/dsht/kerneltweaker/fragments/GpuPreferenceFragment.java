@@ -2,8 +2,6 @@ package com.dsht.kerneltweaker.fragments;
 
 import com.dsht.kerneltweaker.Config;
 import com.dsht.kerneltweaker.R;
-import com.dsht.kerneltweaker.activities.MainActivity;
-import com.dsht.kerneltweaker.utils.Helpers;
 import com.dsht.kerneltweaker.utils.UiHelpers;
 import com.dsht.kerneltweaker.widgets.EditPreference;
 import com.dsht.kerneltweaker.widgets.GenericPreference;
@@ -11,7 +9,6 @@ import com.dsht.kerneltweaker.widgets.ListPreference;
 import com.dsht.kerneltweaker.widgets.ObservablePreferenceFragment;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 
 public class GpuPreferenceFragment extends ObservablePreferenceFragment {
 

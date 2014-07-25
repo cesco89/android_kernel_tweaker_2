@@ -13,8 +13,6 @@ import com.dsht.kerneltweaker.utils.UvItem;
 import com.dsht.kerneltweaker.widgets.EditPreference;
 import com.dsht.kerneltweaker.widgets.GenericPreference;
 import com.dsht.kerneltweaker.widgets.ObservablePreferenceFragment;
-import com.dsht.kerneltweaker.widgets.QuickReturnListView;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceScreen;
@@ -23,13 +21,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 public class UVPreferenceFragment extends ObservablePreferenceFragment implements OnClickListener, OnValueChangedListener, OnLoadingFinishedListener{
@@ -43,8 +36,6 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
     private LinearLayout mButtonsLayout;
     private TextView mMillivoltText;
 
-    private static ListView mList;
-    private LinearLayout mMenu;
     private Config mConfig;
 
     @Override
@@ -71,8 +62,6 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
         Button mCancel = (Button) v.findViewById(R.id.btn_cancel);
         mButtonsLayout = (LinearLayout) v.findViewById(R.id.apply_layout);
         mMillivoltText = (TextView) v.findViewById(R.id.text_mv);
-        mList = (ListView) v.findViewById(android.R.id.list);
-        mMenu = (LinearLayout) v.findViewById(R.id.menu);
 
         mPlus.setOnClickListener(this);
         mMinus.setOnClickListener(this);
@@ -204,12 +193,6 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
             if(mButtonsLayout.getVisibility() == View.VISIBLE) {
                 mButtonsLayout.setVisibility(View.GONE);
             }
-        }
-    }
-    
-    private void showApply() {
-        if(mButtonsLayout.getVisibility() == View.GONE) {
-            mButtonsLayout.setVisibility(View.VISIBLE);
         }
     }
 

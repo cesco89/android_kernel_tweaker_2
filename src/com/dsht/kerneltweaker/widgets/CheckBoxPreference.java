@@ -8,9 +8,6 @@ import android.content.SharedPreferences;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.Switch;
 
 public class CheckBoxPreference extends GenericPreference{
     

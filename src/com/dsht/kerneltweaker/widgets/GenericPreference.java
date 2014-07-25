@@ -1,7 +1,5 @@
 package com.dsht.kerneltweaker.widgets;
 
-import java.io.File;
-
 import com.dsht.kerneltweaker.Config;
 import com.dsht.kerneltweaker.R;
 import com.dsht.kerneltweaker.database.Category;
@@ -16,9 +14,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.preference.Preference;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -44,7 +40,6 @@ public class GenericPreference extends Preference{
     private String masterDir;
     private AlertDialog mDialog;
     private TextView title, summary;
-    private CharSequence mSummary;
     private boolean fromJava = false;
     private boolean hideBoot = false;
     private boolean isMulticore = false;
@@ -52,7 +47,6 @@ public class GenericPreference extends Preference{
     private boolean mustApplyValues = true;
     private View separator;
     private OnValueChangedListener mListener;
-    private View mView;
     private LayoutInflater mInflater;
     private UvItem mItem;
     private int position = 0;
@@ -87,7 +81,6 @@ public class GenericPreference extends Preference{
     @Override
     public void onBindView(View view) {
         super.onBindView(view);
-        mView = view;
         title = (TextView) view.findViewById(android.R.id.title);
         summary = (TextView) view.findViewById(android.R.id.summary);
         mCheckBox = (CheckBox) view.findViewById(R.id.checkBox);

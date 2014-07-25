@@ -745,8 +745,7 @@ public class Helpers {
     }
 
     public static boolean isSystemApp(Context c) {
-        boolean mIsSystemApp;
-        return mIsSystemApp = c.getResources().getBoolean(R.bool.config_isSystemApp);
+        return c.getResources().getBoolean(R.bool.config_isSystemApp);
     }
 
     /*

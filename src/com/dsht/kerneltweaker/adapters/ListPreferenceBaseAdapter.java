@@ -15,10 +15,6 @@ public class ListPreferenceBaseAdapter extends BaseAdapter {
     private String[] mEntries;
     private String previousValue;
 
-    private ListPreferenceBaseAdapter() {
-        // unused //
-    }
-
     public ListPreferenceBaseAdapter(Context c, String[] entries, String prevValue) {
         this.mContext = c;
         this.mEntries = entries;

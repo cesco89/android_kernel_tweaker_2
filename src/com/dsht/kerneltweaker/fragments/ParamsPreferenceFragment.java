@@ -8,7 +8,6 @@ import com.dsht.kerneltweaker.utils.UiHelpers;
 import com.dsht.kerneltweaker.widgets.ObservablePreferenceFragment;
 
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
 import android.util.Log;
 

@@ -1,19 +1,17 @@
 package com.dsht.kerneltweaker.activities;
 
-import java.io.File;
-
-import com.dsht.kerneltweaker.Config;
-import com.dsht.kerneltweaker.R;
-import com.dsht.kerneltweaker.fragments.ParamsPreferenceFragment;
-import com.dsht.kerneltweaker.interfaces.OnCompleteListener;
-import com.dsht.kerneltweaker.utils.UiHelpers;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+
+import com.dsht.kerneltweaker.Config;
+import com.dsht.kerneltweaker.R;
+import com.dsht.kerneltweaker.fragments.ParamsPreferenceFragment;
+import com.dsht.kerneltweaker.interfaces.OnCompleteListener;
+import com.dsht.kerneltweaker.utils.UiHelpers;
 
 public class ParamsActivity extends Activity implements OnCompleteListener {
 

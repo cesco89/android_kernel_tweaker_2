@@ -17,14 +17,9 @@ import com.dsht.kerneltweaker.widgets.SwitchPreference;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class CpuPreferenceFragment extends ObservablePreferenceFragment implements OnPreferenceClickListener, OnLoadingFinishedListener{
 

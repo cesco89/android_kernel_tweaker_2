@@ -1,15 +1,14 @@
 package com.dsht.kernetweaker.cmdprocessor;
 
+import android.annotation.SuppressLint;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-@SuppressWarnings("AccessOfSystemProperties")
 public class CommandResult implements Parcelable {
     private final String TAG = getClass().getSimpleName();
     private final long mStartTime;
@@ -36,7 +35,7 @@ public class CommandResult implements Parcelable {
 
     // pretty much just forward the constructor from parcelable to our main
     // loading constructor
-    @SuppressWarnings("CastToConcreteClass")
+    @SuppressLint("ParcelCreator")
     public CommandResult(Parcel inParcel) {
         this(inParcel.readLong(),
                 inParcel.readInt(),
