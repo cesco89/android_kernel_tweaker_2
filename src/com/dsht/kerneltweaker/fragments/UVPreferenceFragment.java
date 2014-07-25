@@ -102,6 +102,7 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
     @Override
     public void onLoadingFinished() {
         // TODO Auto-generated method stub
+        this.getListener().onComplete();
     }
 
     @Override
