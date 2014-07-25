@@ -1,0 +1,46 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory
+        android:key="key_kernel_logging"
+        android:title="@string/category_kernel_log" >
+        <com.dsht.kerneltweaker.widgets.CheckBoxPreference
+            android:key="key_logcat"
+            android:summary="@string/logcat_desc"
+            android:title="@string/logcat_title" />
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory
+        android:key="key_kernel_io"
+        android:title="@string/category_kernel_io" >
+        <com.dsht.kerneltweaker.widgets.ListPreference
+            android:key="key_sched"
+            android:summary="@string/scheduler_desc"
+            android:title="@string/scheduler_title" />
+
+        <com.dsht.kerneltweaker.widgets.CheckBoxPreference
+            android:key="key_fsync"
+            android:summary="@string/fsync_desc"
+            android:title="@string/fsync_title" />
+
+        <com.dsht.kerneltweaker.widgets.ListPreference
+            android:key="key_read_ahead"
+            android:summary="@string/read_ahead_desc"
+            android:title="@string/read_ahead_title" />
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory
+        android:key="key_kernel_net"
+        android:title="@string/category_kernel_net" >
+        <com.dsht.kerneltweaker.widgets.ListPreference
+            android:key="key_tcp"
+            android:summary="@string/tcp_desc"
+            android:title="@string/tcp_title" />
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory
+        android:key="key_kernel_power"
+        android:title="@string/category_kernel_power" >
+        <com.dsht.kerneltweaker.widgets.CheckBoxPreference
+            android:key="key_fcharge"
+            android:summary="@string/fcharge_desc"
+            android:title="@string/fcharge_title" />
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+
+</PreferenceScreen>

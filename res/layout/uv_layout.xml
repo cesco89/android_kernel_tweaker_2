@@ -1,0 +1,76 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.dsht.kerneltweaker.widgets.QuickReturnListView
+        android:id="@+android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false" />
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:animateLayoutChanges="true"
+        android:gravity="right"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/apply_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/text_mv"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:fontFamily="sans-serif-condensed"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/btn_apply"
+                android:layout_width="240dp"
+                android:layout_height="48dp"
+                android:drawableLeft="@drawable/ic_accept"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/button_apply" />
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="240dp"
+                android:layout_height="48dp"
+                android:drawableLeft="@drawable/ic_cancel"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/button_cancel" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/button_minus"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:drawableLeft="@drawable/ic_expand"
+                android:fontFamily="sans-serif-condensed"
+                android:text="-25mV" />
+
+            <Button
+                android:id="@+id/button_plus"
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:drawableRight="@drawable/ic_collapse"
+                android:fontFamily="sans-serif-condensed"
+                android:text="+25mV" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

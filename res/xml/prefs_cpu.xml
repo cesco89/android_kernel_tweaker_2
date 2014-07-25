@@ -1,0 +1,44 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory android:title="@string/cpu_category" >
+        <com.dsht.kerneltweaker.widgets.ListPreference
+            android:key="key_cpu_max_freq"
+            android:summary="@string/cpu_max_freq_desc"
+            android:title="@string/cpu_max_freq_title" />
+        <com.dsht.kerneltweaker.widgets.ListPreference
+            android:key="key_cpu_min_freq"
+            android:summary="@string/cpu_min_freq_desc"
+            android:title="@string/cpu_min_freq_title" />
+        <com.dsht.kerneltweaker.widgets.ListPreference
+            android:key="key_cpu_governor"
+            android:summary="@string/cpu_governor_desc"
+            android:title="@string/cpu_governor_title" />
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory
+        android:key="key_cores_category" 
+        android:title="@string/cpu_core_category" >
+    <com.dsht.kerneltweaker.widgets.CheckBoxPreference
+            android:key="key_mpdec"
+            android:title="@string/cpu_core_mpdec"/>
+    <com.dsht.kerneltweaker.widgets.SwitchPreference
+            android:key="key_core_1"
+            android:title="@string/cpu_core_1"/>
+    <com.dsht.kerneltweaker.widgets.SwitchPreference
+            android:key="key_core_2"
+            android:title="@string/cpu_core_2"/>
+    <com.dsht.kerneltweaker.widgets.SwitchPreference
+            android:key="key_core_3"
+            android:title="@string/cpu_core_3"/>
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory 
+        android:key="key_advanced_category"
+        android:title="@string/cpu_advanced_category" >
+        <com.dsht.kerneltweaker.widgets.GenericPreference
+            android:key="key_advanced_governor"
+            android:title="@string/cpu_governor_settings" />
+        <com.dsht.kerneltweaker.widgets.GenericPreference
+            android:key="key_advanced_hotplug"
+            android:title="@string/cpu_advanced_hotplug" />
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+
+</PreferenceScreen>

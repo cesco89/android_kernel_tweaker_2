@@ -1,0 +1,17 @@
+<resources>
+
+    <color name="mint_green">#27af89</color>
+    <color name="dark_gray">#121212</color>
+    <color name="light_gray">#eaeaea</color>
+    <color name="ash_gray">#292929</color>
+    <color name="apptheme_color">#27af89</color>
+    <color name="content_bg">#474747</color>
+    <color name="mca__list_item_bg_normal">@android:color/transparent</color>
+    <color name="mca__list_item_bg_pressed">#3327af89</color>
+    <color name="gray_pressed">#33545454</color>
+    <color name="gray_normal">#33888888</color>
+    <color name="darktheme_card">#2d2d2d</color>
+    <color name="card_pressed_dark">#3F3F3F</color>
+    <color name="dark_bg">#434341</color>
+
+</resources>

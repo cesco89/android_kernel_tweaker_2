@@ -1,0 +1,32 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory 
+        android:key="key_header_stats"
+        android:title="@string/header_stats" >
+        <com.dsht.kerneltweaker.widgets.MenuPreference
+            android:icon="@drawable/bar_chart"
+            android:key="key_stats_cpu"
+            android:title="@string/header_stats_cpu" />
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory 
+        android:key="key_header_device"
+        android:title="@string/header_device" >
+        <com.dsht.kerneltweaker.widgets.MenuPreference
+            android:icon="@drawable/flash_on"
+            android:key="key_cpu"
+            android:title="@string/header_cpu" />
+        <com.dsht.kerneltweaker.widgets.MenuPreference
+            android:icon="@drawable/lcd"
+            android:key="key_gpu"
+            android:title="@string/header_gpu" />
+        <com.dsht.kerneltweaker.widgets.MenuPreference
+            android:icon="@drawable/plus_minus"
+            android:key="key_uv"
+            android:title="@string/header_uv" />
+        <com.dsht.kerneltweaker.widgets.MenuPreference
+            android:icon="@drawable/radiation"
+            android:key="key_kernel"
+            android:title="@string/header_kernel" />
+    </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+
+</PreferenceScreen>

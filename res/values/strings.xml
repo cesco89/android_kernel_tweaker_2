@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Kernel Tweaker</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="label_default">Default: </string>
+    <string name="no_values">No tweakable values available</string>
+    <string name="pref_title">Title</string>
+    <string name="pref_summary">Summary</string>
+    <string name="radio_list">List Dialog</string>
+    <string name="radio_edit">EditText Dialog</string>
+    <string name="radio_switch">Switch</string>
+    <string name="radio_checkbox">CheckBox</string>
+    <string name="apply">Apply</string>
+    <string name="action_add">Add</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_save">Save</string>
+    <string name="select">Select</string>
+
+    <!-- MAIN HEADERS -->
+    <string name="header_device">Device Settings</string>
+    <string name="header_stats">Stats</string>
+    <string name="header_stats_cpu">CPU Stats</string>
+    <string name="header_cpu">CPU</string>
+    <string name="header_gpu">GPU</string>
+    <string name="header_uv">Voltages</string>
+    <string name="header_kernel">Kernel</string>
+    <string name="header_custom">Custom</string>
+    <string name="header_user">User settings</string>
+
+    <!-- CPU -->
+    <string name="cpu_category">CPU Settings</string>
+    <string name="cpu_max_freq_title">Max Frequency</string>
+    <string name="cpu_min_freq_title">Min Frequency</string>
+    <string name="cpu_governor_title">Governor</string>
+    <string name="cpu_max_freq_desc">Select Max CPU Frequency</string>
+    <string name="cpu_min_freq_desc">Select Min CPU Frequency</string>
+    <string name="cpu_governor_desc">Select CPU Governor</string>
+    <string name="cpu_governor_settings">Governor settings</string>
+    <string name="cpu_advanced_category">Advanced Options</string>
+    <string name="cpu_advanced_hotplug">Hotplug settings</string>
+    <string name="cpu_info_category">CPU Info</string>
+    <string name="cpu_info_cb_title_show">Show: </string>
+    <string name="cpu_info_cb_title_hide">Hide: </string>
+    <string name="cpu_info_title1">Max Frequency: </string>
+    <string name="cpu_info_title2">Min Frequency: </string>
+    <string name="cpu_info_title3">Governor: </string>
+    <string name="core">Core</string>
+    <string name="time_in_state">TIME IN STATE</string>
+    <string name="unused_cpu_states">UNUSED CPU STATES</string>
+    <string name="total_state_time">TOTAL STATE TIME</string>
+    <string name="info_temperatures">TEMPERATURES</string>
+    <string name="info_temp_cpu">CPU TEMP: </string>
+    <string name="info_temp_batt">BATTERY TEMP: </string>
+    <string name="current_speed">Current Speed</string>
+    <string name="current_max">Maximum speed: </string>
+    <string name="current_min">Minimum speed: </string>
+    <string name="governor">Governor</string>
+    <string name="io">I/O Scheduler</string>
+    <string name="cancel">Cancel</string>
+    <string name="cpu_info_list_header">Core Status</string>
+    <string name="info_cpu">CPU Stats</string>
+    <string name="cpu_speed_header">Core Limits</string>
+    <string name="other_settings_header">Other settings</string>
+    <string name="core_offline">Offline</string>
+    <string name="no_states_file_found">No states file found. Are you sure your phone is
+        compatible?\n\nIf you are running a custom ROM or kernel, try
+        contacting its developer to inform him that the states file is not
+        readable.</string>
+    <string name="deep_sleep">"Deep Sleep"</string>
+    <string name="cpu_core_category">Core control</string>
+    <string name="cpu_core_1">Core 1</string>
+    <string name="cpu_core_2">Core 2</string>
+    <string name="cpu_core_3">Core 3</string>
+    <string name="cpu_core_mpdec">MpDecision</string>
+    <string name="cpu_core_mpdec_desc">Toggle mpdecision</string>
+    <string name="mt_refresh">Refresh</string>
+    <string name="mt_reset">Reset</string>
+    <string name="mt_restore">Restore</string>
+    
+    <!-- GPU -->
+    <string name="gpu_max_freq">GPU Max Frequency</string>
+    <string name="gpu_up_threshold">Up Threshold</string>
+    <string name="gpu_down_threshold">Down Threshold</string>
+    
+    <!-- UV -->
+    <string name="button_apply">Apply</string>
+    <string name="button_cancel">Cancel</string>
+    
+    <!-- KERNEL -->
+    <string name="category_kernel_log">Logging</string>
+    <string name="logcat_title">Logcat</string>
+    <string name="logcat_desc">Disabling Logcat should increase performance a little, but you will not be able to see system logs</string>
+    <string name="category_kernel_io">I/O</string>
+    <string name="fsync_title">Fsync</string>
+    <string name="fsync_desc">if disabled, you\'ll have better I/O performances but less data integrity.</string>
+    <string name="scheduler_title">I/O Scheduler</string>
+    <string name="scheduler_desc">Select default I/O Scheduler</string>
+    <string name="read_ahead_title">SD Read-Ahead</string>
+    <string name="read_ahead_desc">SD Read-Ahead size</string>
+    <string name="category_kernel_power">Power</string>
+    <string name="fcharge_title">Fast Charge</string>
+    <string name="fcharge_desc">Charge battery faster when connected to USB</string>
+    <string name="category_kernel_net">Network</string>
+    <string name="tcp_title">TCP Congestion algorithm</string>
+    <string name="tcp_desc">Select TCP algorithm</string>
+    
+    <!-- CARDS -->
+    <string name="header_one">UI Creator</string>
+    <string name="header_one_desc">Some features are missing? Follow these steps and you will have them!</string>
+    <string name="card_selection_title">UI type</string>
+    <string name="card_selection_desc">Choose one of the available UI types </string>
+    <string name="card_edit_title">Fill required fields</string>
+    <string name="card_edit_desc">These will be used to retrieve and apply values</string>
+    <string name="list_path">File Path</string>
+    <string name="card_name">UI Name</string>
+    <string name="card_name_desc">The interface title, for example \'Max frequency\'</string>
+    <string name="card_summary">UI Summary</string>
+    <string name="card_summary_desc">The interface summary, for example \'set max frequency\'</string>
+    <string name="list_path_desc">The file where values will be pushed</string>
+    <string name="list_path_entries">Entries Path</string>
+    <string name="list_path_entries_desc">The file where is stored the list of applicable values</string>
+    <string name="list_entries_separator">List separator</string>
+    <string name="list_entries_separator_desc">Character used as separator for example \",\" or\n \" \"(space)</string>
+    <string name="card_value_on">Value ON</string>
+    <string name="card_value_on_desc">The value set when switch is on</string>
+    <string name="card_value_off">Value OFF</string>
+    <string name="card_value_off_desc">The value set when switch is off</string>
+</resources>

@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <com.dsht.kerneltweaker.widgets.ListPreference
+        android:key="key_gpu_max_freq"
+        android:title="@string/gpu_max_freq" />
+    <com.dsht.kerneltweaker.widgets.EditPreference
+        android:key="key_gpu_up_threshold"
+        android:title="@string/gpu_up_threshold" />
+    <com.dsht.kerneltweaker.widgets.EditPreference
+        android:key="key_gpu_down_threshold"
+        android:title="@string/gpu_down_threshold" />
+
+</PreferenceScreen>

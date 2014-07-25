@@ -1,0 +1,51 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/ActionBarTheme</item>
+        <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_dark</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/apptheme_btn_check_holo_dark</item>
+        <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>
+        <item name="android:buttonStyle">@style/ButtonAppTheme</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/apptheme_btn_radio_holo_dark</item>
+        <item name="android:imageButtonStyle">@style/ImageButtonAppTheme</item>
+    </style>
+
+    <style name="TextAppearance.FloatLabel" parent="android:TextAppearance.Medium">
+        <item name="android:textColor">@color/mint_green</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="ActionBarTheme" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@drawable/ab_solid_dark_holo</item>
+    </style>
+
+    <style name="ProgressBarAppTheme" parent="android:Widget.Holo.Light.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/apptheme_progress_horizontal_holo_light</item>
+        <item name="android:indeterminateDrawable">@drawable/apptheme_progress_indeterminate_horizontal_holo_light</item>
+    </style>
+
+    <style name="ButtonAppTheme" parent="android:Widget.Holo.Button">
+        <item name="android:background">@drawable/apptheme_btn_default_holo_dark</item>
+    </style>
+
+    <style name="ImageButtonAppTheme" parent="android:Widget.Holo.ImageButton">
+        <item name="android:background">@drawable/apptheme_btn_default_holo_dark</item>
+    </style>
+    
+    
+</resources>
