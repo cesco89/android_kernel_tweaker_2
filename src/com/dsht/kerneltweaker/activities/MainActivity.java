@@ -2,26 +2,20 @@ package com.dsht.kerneltweaker.activities;
 
 import com.dsht.kerneltweaker.Config;
 import com.dsht.kerneltweaker.R;
-import com.dsht.kerneltweaker.fragments.CpuPreferenceFragment;
 import com.dsht.kerneltweaker.fragments.MenuPreferenceFragment;
 import com.dsht.kerneltweaker.fragments.CpuStatsFragment;
 import com.dsht.kerneltweaker.interfaces.OnCompleteListener;
 import com.dsht.kerneltweaker.utils.UiHelpers;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnClosedListener;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.stericson.RootTools.RootTools;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.view.Window;
 
 public class MainActivity extends FragmentActivity implements OnCompleteListener{
 
@@ -50,13 +44,15 @@ public class MainActivity extends FragmentActivity implements OnCompleteListener
         mMenu.setMenu(v);
 
 
+        if (savedInstanceState == null) {
+            new UiHelpers(this).loadFragment(new CpuStatsFragment());
+        }
+        
         Fragment f = new MenuPreferenceFragment();
         FragmentManager fm = getFragmentManager();
         fm.beginTransaction()
         .replace(R.id.menu_frame, f, Config.FRAGMENT_TAG)
         .commit();        
-
-        new UiHelpers(this).loadFragment(new CpuStatsFragment());
 
     }
     

@@ -29,9 +29,10 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class UVPreferenceFragment extends ObservablePreferenceFragment implements OnClickListener, OnScrollListener, OnValueChangedListener, OnLoadingFinishedListener{
+public class UVPreferenceFragment extends ObservablePreferenceFragment implements OnClickListener, OnValueChangedListener, OnLoadingFinishedListener{
 
     private PreferenceScreen mRoot;
     private UiHelpers mUiHelpers;
@@ -42,17 +43,7 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
     private LinearLayout mButtonsLayout;
     private TextView mMillivoltText;
 
-    private static final int STATE_ONSCREEN = 0;
-    private static final int STATE_OFFSCREEN = 1;
-    private static final int STATE_RETURNING = 2;
-    private int mState = STATE_ONSCREEN;
-    private int mScrollY;
-    private int mMinRawY = 0;
-    private static OnGlobalLayoutListener mObserver;
-
-    private int mQuickReturnHeight;
-
-    private static QuickReturnListView mList;
+    private static ListView mList;
     private LinearLayout mMenu;
     private Config mConfig;
 
@@ -65,7 +56,7 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
         mConfig = Config.getInstance();
         mRoot = (PreferenceScreen) findPreference(Config.KEY_ROOT);
         uvItems = Helpers.getUvTable(values, mConfig.getUvPath());
-        if(uvItems != null) {
+        if(uvItems != null && mRoot.getPreferenceCount() == 0) {
             mUiHelpers.createUvPreferences(mRoot, uvItems, mConfig.getUvPath(), this, this);
         }
     }
@@ -80,7 +71,7 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
         Button mCancel = (Button) v.findViewById(R.id.btn_cancel);
         mButtonsLayout = (LinearLayout) v.findViewById(R.id.apply_layout);
         mMillivoltText = (TextView) v.findViewById(R.id.text_mv);
-        mList = (QuickReturnListView) v.findViewById(android.R.id.list);
+        mList = (ListView) v.findViewById(android.R.id.list);
         mMenu = (LinearLayout) v.findViewById(R.id.menu);
 
         mPlus.setOnClickListener(this);
@@ -122,90 +113,6 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
     @Override
     public void onLoadingFinished() {
         // TODO Auto-generated method stub
-        setUpList();
-    }
-
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem,
-            int visibleItemCount, int totalItemCount) {
-
-        mScrollY = 0;
-        int translationY = 0;
-
-        if (mList.scrollYIsComputed()) {
-            mScrollY = mList.getComputedScrollY();
-        }
-
-        int rawY = mScrollY;
-
-        switch (mState) {
-        case STATE_OFFSCREEN:
-            if (rawY >= mMinRawY) {
-                mMinRawY = rawY;
-            } else {
-                mState = STATE_RETURNING;
-            }
-            translationY = rawY;
-            break;
-
-        case STATE_ONSCREEN:
-            if (rawY > mQuickReturnHeight) {
-                mState = STATE_OFFSCREEN;
-                mMinRawY = rawY;
-            }
-            translationY = rawY;
-            break;
-
-        case STATE_RETURNING:
-
-            translationY = (rawY - mMinRawY) + mQuickReturnHeight;
-
-            System.out.println(translationY);
-            if (translationY < 0) {
-                translationY = 0;
-                mMinRawY = rawY + mQuickReturnHeight;
-            }
-
-            if (rawY == 0) {
-                mState = STATE_ONSCREEN;
-                translationY = 0;
-            }
-
-            if (translationY > mQuickReturnHeight) {
-                mState = STATE_OFFSCREEN;
-                mMinRawY = rawY;
-            }
-            break;
-        }
-
-        /** this can be used if the build is below honeycomb **/
-        mMenu.setTranslationX(translationY);
-
-    }
-    
-    private void setUpList() {
-        mObserver = new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                mQuickReturnHeight = mMenu.getWidth();
-                mList.computeScrollY();
-            }
-        };
-        mList.getViewTreeObserver().addOnGlobalLayoutListener(mObserver);
-        mList.setOnScrollListener(this);
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-               UVPreferenceFragment.this.getListener().onComplete();
-            }
-
-        }, 200);
-    }
-
-
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
     }
 
     @Override
@@ -224,15 +131,6 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
             mCmd.setUndervolt(uvItems, values, tableType, mConfig.getUvPath());
         }
 
-    }
-
-    @SuppressWarnings("deprecation")
-    public static void removeListener() {
-        mList.getViewTreeObserver().removeGlobalOnLayoutListener(mObserver);
-    }
-
-    public static OnGlobalLayoutListener getLayoutListener() {
-        return mObserver;
     }
 
     private void applyBatchValues(final boolean plus) {

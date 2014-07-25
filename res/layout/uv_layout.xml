@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.dsht.kerneltweaker.widgets.QuickReturnListView
+    <ListView
         android:id="@+android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

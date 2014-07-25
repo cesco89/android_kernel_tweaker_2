@@ -195,6 +195,12 @@ public class CpuStatsFragment extends ObservableFragment implements Constants {
 			mCurCPUTempThread = null;
 		}
 	}
+	
+	@Override
+	public void onDestroy() {
+	    super.onDestroy();
+	    getActivity().unregisterReceiver(mBatInfoReceiver);
+	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

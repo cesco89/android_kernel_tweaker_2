@@ -71,9 +71,6 @@ public class MenuPreferenceFragment extends PreferenceFragment implements OnPref
     @Override
     public boolean onPreferenceClick(Preference pref) {
         // TODO Auto-generated method stub
-        if(UVPreferenceFragment.getLayoutListener() != null) {
-            UVPreferenceFragment.removeListener();
-        }
         Fragment f = null;
         if(pref == mCpuStats) {
             f = new CpuStatsFragment();
