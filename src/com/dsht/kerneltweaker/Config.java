@@ -23,6 +23,9 @@ public class Config {
     public static final int MAKER_TYPE_EDIT = 1;
     public static final String HEADER = "--header--";
     
+    public static final String BROADCAST_INTENT = "com.dsht.kerneltweaker.APPLICATION_START";
+    public static final String BROADCAST_EXTRA_KEY = "extra_key_send";
+    
     
     //EXTRAS DATA 
     public static final String EXTRA_FILES_DIR = "extra_file_dir";
