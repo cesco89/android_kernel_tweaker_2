@@ -14,26 +14,37 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeoutException;
 
 import com.dsht.kerneltweaker.Config;
 import com.dsht.kerneltweaker.R;
+import com.dsht.kerneltweaker.database.AppProfile;
+import com.dsht.kerneltweaker.database.DatabaseHelpers;
+import com.dsht.kerneltweaker.database.Profile;
 import com.dsht.kernetweaker.cmdprocessor.CMDProcessor;
 import com.dsht.kernetweaker.cmdprocessor.CMDProcessor.CommandResult2;
 import com.stericson.RootTools.RootTools;
 import com.stericson.RootTools.exceptions.RootDeniedException;
 import com.stericson.RootTools.execution.CommandCapture;
 
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.AssetManager;
 import android.graphics.Point;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Display;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
+import android.widget.Toast;
 
 public class Helpers {
 
@@ -850,7 +861,7 @@ public class Helpers {
     public static boolean fileExists(String path) {
         return new File(path).exists();
     }
-    
+
     public static String[] readAheadValues() {
         ArrayList<String> values = new ArrayList<String>();
         int start = 128;
@@ -859,7 +870,7 @@ public class Helpers {
         }
         return values.toArray(new String[values.size()]);
     }
-    
+
     public static String[] readAheadEntries() {
         ArrayList<String> values = new ArrayList<String>();
         int start = 128;
@@ -868,13 +879,105 @@ public class Helpers {
         }
         return values.toArray(new String[values.size()]);
     }
-    
+
     public static String[] getAvailableTCP() {
         return Helpers.readCommandStrdOut(Config.TCP_OPTIONS, false).replaceAll("net.ipv4.tcp_available_congestion_control = ", "").replaceAll("\n", "").trim().split(" ");
     }
-    
+
     public static String getCurrentTCP() {
         return Helpers.readCommandStrdOut(Config.TCP_CURRENT, false).replaceAll("net.ipv4.tcp_congestion_control = ","").replaceAll("\n", "");
+    }
+
+    public static List<ResolveInfo> getInstalleApps(Context mContext) {
+        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        return mContext.getPackageManager().queryIntentActivities(mainIntent, 0);
+    }
+
+    public static void applyProfile(Context c, String packageName) {
+        DatabaseHelpers mDb = new DatabaseHelpers();
+        CMDHelpers cmd = new CMDHelpers();
+        AppProfile mApp = mDb.getAppProfileByName(packageName);
+        if(mApp != null) {
+            Log.d("applyProfile()", "We have a profile. Apply it!");
+            Profile mProfile = mApp.profile;
+            String name = mProfile.name;
+            String max = mProfile.maxFreq;
+            String min = mProfile.minFreq;
+            String governor = mProfile.governor;
+            cmd.setMulticoreValues(max, true);
+            cmd.setMulticoreValues(min, false);
+            cmd.setValuesShell(Config.GOVERNOR_FILE, governor);
+            Toast.makeText(c, 
+                    String.format(c.getResources().getString(R.string.profile_apply_confirmed),
+                            name), 
+                            Toast.LENGTH_SHORT).show();
+        }else{
+            Log.d("applyProfile()", "No profile for this app");
+            setProfileDefaults(c);
+        }
+    }
+
+    public static String getCurrentHome(Context c){
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        ResolveInfo resolveInfo = c.getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        return resolveInfo.activityInfo.packageName;
+    }
+
+    public static boolean isAccessibilityEnabled(Context context, String id) {
+        AccessibilityManager am = (AccessibilityManager) context
+                .getSystemService(Context.ACCESSIBILITY_SERVICE);
+        List<AccessibilityServiceInfo> runningServices = am
+                .getEnabledAccessibilityServiceList(AccessibilityEvent.TYPES_ALL_MASK);
+        for (AccessibilityServiceInfo service : runningServices) {
+            if (id.equals(service.getId())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static void logInstalledAccessiblityServices(Context context) {
+
+        AccessibilityManager am = (AccessibilityManager) context
+                .getSystemService(Context.ACCESSIBILITY_SERVICE);
+
+        List<AccessibilityServiceInfo> runningServices = am
+                .getInstalledAccessibilityServiceList();
+        for (AccessibilityServiceInfo service : runningServices) {
+            Log.i("LOG ACCESSIBILITY SERVICES", service.getId());
+        }
+    }
+
+    public static void setProfileDefaults(Context context){
+        CMDHelpers cmd = new CMDHelpers();
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String maxFreq = mPrefs.getString(Config.KEY_CPU_MAX_FREQ, "null");
+        String minFreq = mPrefs.getString(Config.KEY_CPU_MIN_FREQ, "null");
+        String governor = mPrefs.getString(Config.KEY_CPU_GOVERNOR, "null");
+        if(!maxFreq.equals(readOneLine(Config.MAX_FREQ_FILE))){
+            cmd.setMulticoreValues(maxFreq, true);
+        }
+        if(!minFreq.equals(readOneLine(Config.MIN_FREQ_FILE))){
+            cmd.setMulticoreValues(minFreq, false);
+        }
+        if(!governor.equals(readOneLine(Config.GOVERNOR_FILE))){
+            cmd.setValuesShell(Config.GOVERNOR_FILE, governor);
+        }
+    }
+
+    public static boolean mustSaveDefaults(Context context) {
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String maxFreq = mPrefs.getString(Config.KEY_CPU_MAX_FREQ, null );
+        String minFreq = mPrefs.getString(Config.KEY_CPU_MIN_FREQ, null);
+        String governor = mPrefs.getString(Config.KEY_CPU_GOVERNOR, null);
+
+        if(maxFreq != null && minFreq != null && governor != null){
+            return false;
+        }
+        return true;
     }
 
 }

@@ -24,7 +24,8 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
     private EditPreference mTemp;
     private CheckBoxPreference mIntelliplug;
 
-    private GreenPreferenceCategory mIoCategory, 
+    private GreenPreferenceCategory mLogCategory,
+    mIoCategory, 
     mPowerCategory, 
     mNetCategory,
     mFeaturesCategory;
@@ -63,6 +64,7 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
         //Log.d(TAG, mLogcatValue);
         //Log.d(TAG, mFsyncValue);
 
+        mLogCategory = (GreenPreferenceCategory) findPreference(Config.KEY_KERNEL_CATEGORY_LOG);
         mIoCategory = (GreenPreferenceCategory) findPreference(Config.KEY_KERNEL_CATEGORY_IO);
         mPowerCategory = (GreenPreferenceCategory) findPreference(Config.KEY_KERNEL_CATEGORY_POWER);
         mNetCategory = (GreenPreferenceCategory) findPreference(Config.KEY_KERNEL_CATEGORY_NET);
@@ -78,11 +80,15 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
         mTemp = (EditPreference) findPreference(Config.KEY_TEMP_THRESHOLD);
         mIntelliplug = (CheckBoxPreference) findPreference(Config.KEY_INTELLIPLUG);
 
-        mLogcat.setFilePath(Config.LOGCAT);
-        mLogcat.setPositiveValue("1");
-        mLogcat.setNegativeValue("0");
-        mLogcat.setValue(mLogcatValue);
-        mLogcat.setChecked(mLogcatValue.equals("1"));
+        if(Helpers.fileExists(Config.LOGCAT)) {
+            mLogcat.setFilePath(Config.LOGCAT);
+            mLogcat.setPositiveValue("1");
+            mLogcat.setNegativeValue("0");
+            mLogcat.setValue(mLogcatValue);
+            mLogcat.setChecked(mLogcatValue.equals("1"));
+        }else{
+            mLogCategory.removePreference(mLogcat);
+        }
 
         if(Helpers.fileExists(Config.FSYNC_FILE)) {
             mFsyncValue = Helpers.readFileViaShell(Config.FSYNC_FILE, false);
@@ -92,25 +98,24 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
             mFsync.setChecked(mFsyncValue.equals("Y"));
         }else{
             mIoCategory.removePreference(mFsync);
-            if(mIoCategory.getPreferenceCount() == 0) {
-                this.getPreferenceScreen().removePreference(mIoCategory);
-            }
         }
 
-        mScheduler.setSummary(mCurrentScheduler);
-        mScheduler.setEntries(mAvailableSchedGovs);
-        mScheduler.setValues(mAvailableSchedGovs);
-        mScheduler.setValue(mCurrentScheduler);
-        mScheduler.setFilePath(Config.SCHEDULER_FILE);
-        mScheduler.setDialog(mUiHelpers.buildListPreferenceDialog(mScheduler, mAvailableSchedGovs, mAvailableSchedGovs));
-
-        mReadAhead.setSummary(mCurrentReadAhead+" KB");
-        mReadAhead.setEntries(mReadAheadEntries);
-        mReadAhead.setValues(mReadAheadValues);
-        mReadAhead.setValue(mCurrentReadAhead);
-        mReadAhead.setFilePath(Config.READ_AHEAD_FILE);
-        mReadAhead.setDialog(mUiHelpers.buildListPreferenceDialog(mReadAhead, mReadAheadEntries, mReadAheadValues));
-
+        if(Helpers.fileExists(Config.SCHEDULER_FILE)) {
+            mScheduler.setSummary(mCurrentScheduler);
+            mScheduler.setValue(mCurrentScheduler);
+            mScheduler.setFilePath(Config.SCHEDULER_FILE);
+            mScheduler.setDialog(mUiHelpers.buildListPreferenceDialog(mScheduler, mAvailableSchedGovs, mAvailableSchedGovs));
+        }else{
+            mIoCategory.removePreference(mScheduler);
+        }
+        if(Helpers.fileExists(Config.READ_AHEAD_FILE)){
+            mReadAhead.setSummary(mCurrentReadAhead+" KB");
+            mReadAhead.setValue(mCurrentReadAhead);
+            mReadAhead.setFilePath(Config.READ_AHEAD_FILE);
+            mReadAhead.setDialog(mUiHelpers.buildListPreferenceDialog(mReadAhead, mReadAheadEntries, mReadAheadValues));
+        }else{
+            mIoCategory.removePreference(mReadAhead);
+        }
 
         if(Helpers.fileExists(Config.FCHARGE_FILE)) {
             mFchargeValue = Helpers.readFileViaShell(Config.FCHARGE_FILE, false);
@@ -120,22 +125,18 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
             mFcharge.setChecked(mFchargeValue.equals("1"));
         }else{
             mPowerCategory.removePreference(mFcharge);
-            checkCategories();
         }
 
         if(RootTools.isBusyboxAvailable()) {
             mTcpCurrent = Helpers.getCurrentTCP();
             mTcpAvailable = Helpers.getAvailableTCP();
             mTcp.setSummary(mTcpCurrent);
-            mTcp.setEntries(mTcpAvailable);
-            mTcp.setValues(mTcpAvailable);
             mTcp.setValue(mTcpCurrent);
             mTcp.setFilePath(Config.TCP_COMMAND_REGEX);
             mTcp.setIsCustomCommand(true);
             mTcp.setDialog(mUiHelpers.buildListPreferenceDialog(mTcp, mTcpAvailable, mTcpAvailable));
         }else{
             mNetCategory.removePreference(mTcp);
-            checkCategories();
         }
 
         if(Helpers.fileExists(Config.TEMP_FILE)) {
@@ -146,9 +147,8 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
             mTemp.setDialog(mUiHelpers.buildEditTextDialog(mTemp, mTempCurrent));
         }else{
             mFeaturesCategory.removePreference(mTemp);
-            checkCategories();
         }
-        
+
         if(Helpers.fileExists(Config.INTELLIPLUG_FILE)) {
             mIntelliplugCurrent = Helpers.readFileViaShell(Config.INTELLIPLUG_FILE, false);
             mIntelliplug.setSummary(mIntelliplugCurrent);
@@ -158,8 +158,9 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
             mIntelliplug.setChecked(mIntelliplugCurrent.equals("1"));
         }else{
             mFeaturesCategory.removePreference(mIntelliplug);
-            checkCategories();
         }
+
+        checkCategories();
 
     }
 
@@ -168,13 +169,16 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
         super.onResume();
         this.getListener().onComplete();
     }
-    
+
     private void checkCategories() {
-        if(mFeaturesCategory.getPreferenceCount() == 0) {
-            this.getPreferenceScreen().removePreference(mFeaturesCategory);
+        if(mLogCategory.getPreferenceCount() == 0) {
+            this.getPreferenceScreen().removePreference(mLogCategory);
         }
-        if(mFeaturesCategory.getPreferenceCount() == 0) {
-            this.getPreferenceScreen().removePreference(mFeaturesCategory);
+        if(mIoCategory.getPreferenceCount() == 0) {
+            this.getPreferenceScreen().removePreference(mIoCategory);
+        }
+        if(mPowerCategory.getPreferenceCount() == 0) {
+            this.getPreferenceScreen().removePreference(mPowerCategory);
         }
         if(mNetCategory.getPreferenceCount() == 0) {
             this.getPreferenceScreen().removePreference(mNetCategory);

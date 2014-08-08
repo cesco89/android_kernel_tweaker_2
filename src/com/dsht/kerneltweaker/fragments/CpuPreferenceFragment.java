@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.util.Log;
 
 public class CpuPreferenceFragment extends ObservablePreferenceFragment implements OnPreferenceClickListener, OnLoadingFinishedListener{
 
@@ -64,24 +65,18 @@ public class CpuPreferenceFragment extends ObservablePreferenceFragment implemen
         mCpuMin.setSummary((Integer.parseInt(mConfig.getCurrentMinFreq())/1000)+ " Mhz");
         mCpuGovernor.setSummary(mConfig.getCurrentGovernor());
 
-        mCpuMax.setEntries(mConfig.getCpuFreqEntries());
-        mCpuMax.setValues(mConfig.getCpuFreqValues());
         mCpuMax.setFilePath(Config.MAX_FREQ_FILE);
         mCpuMax.setValue(mConfig.getCurrentMaxFreq());
         mCpuMax.setDialog(mUiHelpers.buildListPreferenceDialog(mCpuMax, mConfig.getCpuFreqEntries(), mConfig.getCpuFreqValues()));
         mCpuMax.setMulticore(true);
         mCpuMax.setIsMaxFreq(true);
 
-        mCpuMin.setEntries(mConfig.getCpuFreqEntries());
-        mCpuMin.setValues(mConfig.getCpuFreqValues());
         mCpuMin.setFilePath(Config.MIN_FREQ_FILE);
         mCpuMin.setValue(mConfig.getCurrentMinFreq());
         mCpuMin.setDialog(mUiHelpers.buildListPreferenceDialog(mCpuMin, mConfig.getCpuFreqEntries(), mConfig.getCpuFreqValues()));
         mCpuMin.setMulticore(true);
         mCpuMin.setIsMaxFreq(false);
 
-        mCpuGovernor.setEntries(mConfig.getCpuGovernors());
-        mCpuGovernor.setValues(mConfig.getCpuGovernors());
         mCpuGovernor.setFilePath(Config.GOVERNOR_FILE);
         mCpuGovernor.setValue(mConfig.getCurrentGovernor());
         mCpuGovernor.setDialog(mUiHelpers.buildListPreferenceDialog(mCpuGovernor, mConfig.getCpuGovernors(), mConfig.getCpuGovernors()));
@@ -118,6 +113,7 @@ public class CpuPreferenceFragment extends ObservablePreferenceFragment implemen
         if(!mpExists) {
             mCoreCategory.removePreference(mMpdec);
             showHideCores(true);
+            this.getPreferenceScreen().removePreference(mCoreCategory);
         }
         if(!Helpers.fileExists(Config.HOTPLUG_FOLDER)) {
            mAdvancedCategory.removePreference(mAdvancedHotplug); 
@@ -180,5 +176,7 @@ public class CpuPreferenceFragment extends ObservablePreferenceFragment implemen
             mCoreCategory.removePreference(mCore3);
         }
     }
+    
+    
 
 }

@@ -1,9 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_save"
+        android:id="@+id/action_new"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/action_save"/>
+        android:icon="@drawable/ic_action_content_new"
+        android:title="@string/action_new"/>
 
 </menu>

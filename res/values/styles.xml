@@ -17,6 +17,7 @@
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="android:actionBarStyle">@style/ActionBarTheme</item>
+        <item name="android:windowBackground">@color/ash_gray</item>
         <item name="android:editTextBackground">@drawable/apptheme_edit_text_holo_dark</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/apptheme_btn_check_holo_dark</item>
         <item name="android:progressBarStyleHorizontal">@style/ProgressBarAppTheme</item>

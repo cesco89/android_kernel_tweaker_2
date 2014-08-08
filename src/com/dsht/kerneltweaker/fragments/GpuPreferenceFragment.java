@@ -33,8 +33,6 @@ public class GpuPreferenceFragment extends ObservablePreferenceFragment {
             mGpuMax.setDialog(mUiHelpers.buildListPreferenceDialog(mGpuMax, mConfig.getGpuEntries(), mConfig.getGpuValues()));
             mGpuMax.setFilePath(Config.GPU_MAX_FREQ_FILE);
             mGpuMax.setValue(mConfig.getCurrentGpuMaxFreq());
-            mGpuMax.setEntries(mConfig.getGpuEntries());
-            mGpuMax.setValues(mConfig.getGpuValues());
         }else {
             this.getPreferenceScreen().removePreference(mGpuMax);
         }

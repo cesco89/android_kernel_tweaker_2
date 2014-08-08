@@ -10,16 +10,28 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceScreen;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +45,19 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import android.view.animation.Transformation;
 
 import com.dsht.kerneltweaker.Config;
 import com.dsht.kerneltweaker.R;
+import com.dsht.kerneltweaker.adapters.AppsBaseAdapter;
+import com.dsht.kerneltweaker.adapters.AppsBaseAdapter.AppItem;
 import com.dsht.kerneltweaker.adapters.ListPreferenceBaseAdapter;
+import com.dsht.kerneltweaker.adapters.ProfileDialogBaseAdapter;
+import com.dsht.kerneltweaker.adapters.ProfilesBaseAdapter;
+import com.dsht.kerneltweaker.database.AppProfile;
+import com.dsht.kerneltweaker.database.DatabaseHelpers;
+import com.dsht.kerneltweaker.database.Profile;
 import com.dsht.kerneltweaker.database.UserItem;
 import com.dsht.kerneltweaker.interfaces.OnLoadingFinishedListener;
 import com.dsht.kerneltweaker.interfaces.OnValueChangedListener;
@@ -53,6 +73,7 @@ public class UiHelpers {
     private Resources mRes;
     private Config mConfig;
     private CMDHelpers mCMD;
+    private DatabaseHelpers mDb;
     private ProgressDialog mProgDiag;
     private LayoutInflater mInflater;
 
@@ -62,6 +83,7 @@ public class UiHelpers {
         this.mConfig = Config.getInstance();
         this.mCMD = new CMDHelpers();
         this.mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.mDb = new DatabaseHelpers();
         mConfig.load();
     }
     /**
@@ -180,6 +202,54 @@ public class UiHelpers {
         return diag;
     }
 
+
+    public AlertDialog buildSaveProfileDialog(final String maxFreq, final String minFreq, final String governor) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle(null);
+        View v = mInflater.inflate(R.layout.edittext_dialog_layout, null, false);
+        FloatLabelLayout mLayout = (FloatLabelLayout) v.findViewById(R.id.fl_layout);
+        mLayout.setLabelHead("");
+        mLayout.setLabelText(mRes.getString(R.string.label_insert_name));
+        mLayout.setLabelTypeface(Typeface.createFromAsset(mContext.getAssets(), "fonts/Roboto-Condensed.ttf"));
+        final EditText et = (EditText) v.findViewById(R.id.edit_value);
+        builder.setView(v);
+        builder.setPositiveButton(R.string.btn_ok, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                if(!et.getText().equals("")){
+                    mDb.saveProfile(et.getText().toString(), maxFreq, minFreq, governor);
+                    et.setText("");
+                }else{
+                    Toast.makeText(mContext, mRes.getString(R.string.empty_name_error), Toast.LENGTH_SHORT).show();
+                }
+                dialog.cancel();
+
+            }
+        })
+        .setNegativeButton(R.string.btn_cancel, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                dialog.cancel();
+            }
+        });
+        AlertDialog diag = builder.create();
+        diag.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button btnPositive = ((AlertDialog) dialog).getButton(Dialog.BUTTON_POSITIVE);
+                btnPositive.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+
+                Button btnNegative = ((AlertDialog) dialog).getButton(Dialog.BUTTON_NEGATIVE);
+                btnNegative.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+            }
+        });
+        return diag;
+    }
+
     public void showLoadingDialog() {
         mProgDiag = new ProgressDialog(mContext);
         mProgDiag.setIndeterminate(true);
@@ -252,7 +322,7 @@ public class UiHelpers {
             rotateHalfFwd(v);
             expand(content);
         } else {
-
+            rotateHalfBack(v);
             collapse(content);
         }
     }
@@ -321,9 +391,15 @@ public class UiHelpers {
     }
 
     public void loadFragment(Fragment frag) {
-        FragmentTransaction ft = ((Activity)mContext).getFragmentManager().beginTransaction();
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.replace(R.id.container, frag, Config.FRAGMENT_TAG)
+        FragmentManager fm = ((Activity)mContext).getFragmentManager();
+        Fragment old = fm.findFragmentByTag(Config.FRAGMENT_TAG);
+        if(old != null) {
+            fm.beginTransaction()
+            .remove(old);
+        }
+        fm.beginTransaction()
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        .replace(R.id.container, frag, Config.FRAGMENT_TAG)
         .commit();
     }
 
@@ -349,6 +425,14 @@ public class UiHelpers {
     public void startActivity(Activity act, Class c, int bundleValue, String bundleKey) {
         Bundle b = new Bundle();
         b.putInt(bundleKey, bundleValue);
+        Intent i = new Intent(act, c);
+        i.putExtras(b);
+        act.startActivity(i);
+        act.overridePendingTransition(R.anim.anim_slide_left_in, R.anim.anim_slide_right_out);
+    }
+    
+    @SuppressWarnings("rawtypes")
+    public void startActivity(Activity act, Class c, Bundle b) {
         Intent i = new Intent(act, c);
         i.putExtras(b);
         act.startActivity(i);
@@ -388,70 +472,123 @@ public class UiHelpers {
         return listviewElementsheight/gv.getNumColumns();
     }
 
-    public AlertDialog showUserDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        View v = mInflater.inflate(R.layout.dialog_pager, null, false);
-        builder.setView(v);
-        return builder.create();
+
+    public Bitmap getApplicationIcon(String packageName, Context context){
+        Bitmap appIcon = null;
+        try {
+            Drawable icon = context.getPackageManager().getApplicationIcon(packageName);
+            Bitmap tmp = ((BitmapDrawable)icon).getBitmap();
+            int iconSize = context.getResources()
+                    .getDimensionPixelSize(android.R.dimen.notification_large_icon_width);
+            int appIconSize = context.getResources()
+                    .getDimensionPixelSize(android.R.dimen.app_icon_size);
+            Bitmap bmpWithBorder = Bitmap.createBitmap(iconSize, iconSize, tmp.getConfig());
+            Canvas canvas = new Canvas(bmpWithBorder);
+            canvas.drawColor(Color.TRANSPARENT);
+            int margin = (iconSize - appIconSize) / 2;
+            canvas.drawBitmap(tmp, null, new Rect(margin, margin,
+                    appIconSize + margin, appIconSize + margin), null);
+            appIcon = bmpWithBorder;
+        } catch (NameNotFoundException e) {
+            // Ups!
+        }
+
+        return appIcon;
     }
 
-    public void createUserPreferences(final PreferenceScreen mRoot, final List<UserItem> items) {
-        Runnable r  = new Runnable() {
+    public Drawable getApplicationIconDrawable(String packageName, Context context){    
+        try {
+            Drawable appIcon = context.getPackageManager().getApplicationIcon(packageName);
+            return appIcon;
+        } catch (NameNotFoundException e) {
+            // Ups!
+        }
+        return null;
+    }
+
+    public String getApplicationName(String packageName, Context context){
+        PackageManager pm = context.getPackageManager();
+        ApplicationInfo ai;
+        try {
+            ai = pm.getApplicationInfo(packageName, 0);
+        } catch (final NameNotFoundException e) {
+            ai = null;
+        }
+        final String applicationName = (String) pm.getApplicationLabel(ai);
+        return applicationName;
+    }
+    
+    public Dialog buildDeleteProfileDialog(final Profile mProfile, final ProfilesBaseAdapter mAdapter, final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setTitle(mRes.getString(R.string.delete_profile_title));
+        builder.setMessage(mRes.getString(R.string.delete_profile_desc));
+        builder.setPositiveButton(mRes.getString(R.string.dialog_button_delete), new DialogInterface.OnClickListener() {
+            
             @Override
-            public void run() {
-                for(int i = 0; i<items.size(); i++) {
-                    int type = items.get(i).ui_type;
-                    switch(type) {
-                    case 0:
-                        if(Helpers.fileExists(items.get(i).filePath) && Helpers.fileExists(items.get(i).entriesPath)) {
-                            ListPreference pref = new ListPreference(mContext, items.get(i).name);
-                            pref.setTitle(items.get(i).name);
-                            pref.setSummary(Helpers.readOneLine(items.get(i).filePath));
-                            pref.setDialog(
-                                    buildListPreferenceDialog(
-                                            pref, 
-                                            Helpers.getFileAsArray(items.get(i).entriesPath, items.get(i).separator),
-                                            Helpers.getFileAsArray(items.get(i).entriesPath, items.get(i).separator))
-                                    );
-                            pref.setFilePath(items.get(i).filePath);
-                            pref.setValue(Helpers.readOneLine(items.get(i).filePath));
-                            mRoot.addPreference(pref);
-                        }
-                        break;
-                    case 1:
-                        if(Helpers.fileExists(items.get(i).filePath)) {
-                            EditPreference pref = new EditPreference(mContext, items.get(i).name);
-                            pref.setTitle(items.get(i).name);
-                            pref.setSummary(Helpers.readOneLine(items.get(i).filePath));
-                            pref.setDialog(
-                                    buildEditTextDialog(pref, Helpers.readOneLine(items.get(i).filePath)));
-                            pref.setFilePath(items.get(i).filePath);
-                            pref.setValue(Helpers.readOneLine(items.get(i).filePath));
-                            mRoot.addPreference(pref);
-
-                        }
-                        break;
-                    case 2:
-                        if(Helpers.fileExists(items.get(i).filePath)) {
-                            SwitchPreference pref = new SwitchPreference(mContext, items.get(i).name);
-                            pref.setTitle(items.get(i).name);
-                            pref.setSummary(items.get(i).summary);
-                            pref.setValue(Helpers.readOneLine(items.get(i).filePath));
-                            pref.setPositiveValue(items.get(i).valueOn);
-                            pref.setNegativeValue(items.get(i).valueOff);
-                            mRoot.addPreference(pref);
-                            pref.setChecked(pref.getValue().equals(pref.getPositiveValue()) ? true : false);
-                        }
-                        break;
-                    case 3:
-
-                        break;
-                    }
-                }
-
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                mDb.deleteProfile(mProfile);
+                mAdapter.remove(position);
+                dialog.cancel();
             }
-        };
-        new Handler().post(r);
+        })
+        .setNegativeButton(mRes.getString(R.string.dialog_button_cancel), new DialogInterface.OnClickListener() {
+            
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                dialog.cancel();
+            }
+        });
+        AlertDialog diag = builder.create();
+        diag.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button btnPositive = ((AlertDialog) dialog).getButton(Dialog.BUTTON_POSITIVE);
+                btnPositive.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+
+                Button btnNegative = ((AlertDialog) dialog).getButton(Dialog.BUTTON_NEGATIVE);
+                btnNegative.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+            }
+        });
+        return diag;
+    }
+    
+    public Dialog buildProfileDialog(final int appPos, final AppItem item, final AppsBaseAdapter mListAdapter) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        ListView list = new ListView(mContext);
+        final ProfileDialogBaseAdapter mAdapter = new ProfileDialogBaseAdapter(mContext, mDb.getAllProfiles());
+        builder.setView(list);
+        list.setAdapter(mAdapter);
+        
+        if(item.haveProfile){
+            builder.setPositiveButton(mRes.getString(R.string.dialog_button_remove), new DialogInterface.OnClickListener() {
+                
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // TODO Auto-generated method stub
+                    AppProfile mApp = item.mProfile;
+                    mDb.deleteAppProfile(mApp);
+                    mListAdapter.removeAppProfile(appPos);
+                }
+            });
+        }
+        
+        final AlertDialog diag = builder.create();
+        list.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                    long arg3) {
+                // TODO Auto-generated method stub
+                Profile mProfile = mAdapter.getItem(arg2);
+                AppProfile mApp = mDb.saveAppProfile(item.packageName, mProfile);
+                mListAdapter.updateItem(appPos, mApp);
+                diag.cancel();
+            }
+            
+        });
+        return diag;
     }
 
 }

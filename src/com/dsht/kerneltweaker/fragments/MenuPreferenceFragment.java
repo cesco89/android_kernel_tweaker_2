@@ -26,6 +26,7 @@ public class MenuPreferenceFragment extends PreferenceFragment implements OnPref
     private MenuPreference mGpu;
     private MenuPreference mUv;
     private MenuPreference mKernel;
+    private MenuPreference mPerApp;
     private UiHelpers mUiHelpers;
     private Config mConfig;
 
@@ -45,12 +46,14 @@ public class MenuPreferenceFragment extends PreferenceFragment implements OnPref
         mGpu = (MenuPreference) findPreference(Config.KEY_GPU);
         mUv = (MenuPreference) findPreference(Config.KEY_UV);
         mKernel = (MenuPreference) findPreference(Config.KEY_KERNEL);
+        mPerApp = (MenuPreference) findPreference(Config.KEY_PERAPP);
 
         mCpuStats.setOnPreferenceClickListener(this);
         mCpu.setOnPreferenceClickListener(this);
         mGpu.setOnPreferenceClickListener(this);
         mUv.setOnPreferenceClickListener(this);
         mKernel.setOnPreferenceClickListener(this);
+        mPerApp.setOnPreferenceClickListener(this);
         
         if(mConfig.getUvPath() == null) {
             mDeviceCategory.removePreference(mUv);
@@ -84,6 +87,9 @@ public class MenuPreferenceFragment extends PreferenceFragment implements OnPref
         }
         if(pref == mKernel) {
             f = new KernelPreferenceFragment();
+        }
+        if(pref == mPerApp) {
+            f = new PerAppFragment();
         }
         if(f != null) {
             mUiHelpers.loadFragment(f);

@@ -10,31 +10,18 @@
         <attr name="layout" format="reference"/>
     </declare-styleable>
     
-    <declare-styleable name="SlidingUpPanelLayout">
-        <attr name="panelHeight" format="dimension" />
-        <attr name="shadowHeight" format="dimension" />
-        <attr name="paralaxOffset" format="dimension" />
-        <attr name="fadeColor" format="color" />
-        <attr name="flingVelocity" format="integer" />
-        <attr name="dragView" format="reference" />
-        <attr name="overlay" format="boolean"/>
-        <attr name="anchorPoint" format="float" />
-    </declare-styleable>
-    
-        <declare-styleable name="ShowcaseView">
-        <attr name="sv_backgroundColor" format="color|reference" />
-        <attr name="sv_detailTextColor" format="color|reference" />
-        <attr name="sv_titleTextColor" format="color|reference" />
-        <attr name="sv_buttonBackgroundColor" format="color|reference" />
-        <attr name="sv_buttonForegroundColor" format="color|reference" />
-        <attr name="sv_buttonText" format="string|reference" />
-        <attr name="sv_detailTextAppearance" format="reference" />
-        <attr name="sv_titleTextAppearance" format="reference" />
-        <attr name="sv_showcaseColor" format="color|reference" />
-        <attr name="sv_tintButtonColor" format="boolean|reference" />
-    </declare-styleable>
-    <declare-styleable name="CustomTheme">
-        <attr name="showcaseViewStyle" format="reference" />
+    <declare-styleable name="PagerSlidingTabStrip">
+        <attr name="indicatorColor" format="color" />
+        <attr name="underlineColor" format="color" />
+        <attr name="dividerColor" format="color" />
+        <attr name="indicatorHeight" format="dimension" />
+        <attr name="underlineHeight" format="dimension" />
+        <attr name="dividerPadding" format="dimension" />
+        <attr name="tabPaddingLeftRight" format="dimension" />
+        <attr name="scrollOffset" format="dimension" />
+        <attr name="tabBackground" format="reference" />
+        <attr name="shouldExpand" format="boolean" />
+        <attr name="textAllCaps" format="boolean" />
     </declare-styleable>
  
 </resources>

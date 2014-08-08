@@ -36,15 +36,5 @@ public class ListPreference extends GenericPreference{
     public void onClick() {
         getDialog().show();
     }
-    
-    
-    
-    public void setEntries(String[] entries) {
-        this.entries = entries;
-    }
-    
-    public void setValues(String[] values) {
-        this.values = values;
-    }
 
 }

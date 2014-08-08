@@ -8,6 +8,8 @@
     <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
     <string name="label_default">Default: </string>
+    <string name="label_insert_name">Insert Name</string>
+    <string name="empty_name_error">You must provide a name</string>
     <string name="no_values">No tweakable values available</string>
     <string name="pref_title">Title</string>
     <string name="pref_summary">Summary</string>
@@ -19,7 +21,19 @@
     <string name="action_add">Add</string>
     <string name="action_edit">Edit</string>
     <string name="action_save">Save</string>
+    <string name="action_new">New</string>
     <string name="select">Select</string>
+    <string name="ab_edit_template">Editing %s Profile</string>
+    <string name="delete_profile_title">Delete Profile</string>
+    <string name="delete_profile_desc">Are you sure you want to delete this profile?</string>
+    <string name="dialog_button_delete">Delete</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="app_profile_desc">Profile: %s</string>
+    <string name="dialog_button_remove">Remove profile for this app</string>
+    <string name="profile_apply_confirmed">%s profile successfully applied!</string>
+    <string name="per_app_set_default">Set default profile</string>
+    <string name="per_app_enable_service">Enable Per-App service</string>
+    <string name="per_app_help_text">Per-App service needs to be enabled!</string>
 
     <!-- MAIN HEADERS -->
     <string name="header_device">Device Settings</string>
@@ -29,8 +43,8 @@
     <string name="header_gpu">GPU</string>
     <string name="header_uv">Voltages</string>
     <string name="header_kernel">Kernel</string>
-    <string name="header_custom">Custom</string>
-    <string name="header_user">User settings</string>
+    <string name="header_apps">User Settings</string>
+    <string name="header_perapp">Per-App Profiles</string>
 
     <!-- CPU -->
     <string name="cpu_category">CPU Settings</string>
@@ -114,25 +128,12 @@
     <string name="intelliplug_title">Intelliplug</string>
     <string name="intelliplug_desc">Enable/Disable Intelliplug</string>
     
-    <!-- CARDS -->
-    <string name="header_one">UI Creator</string>
-    <string name="header_one_desc">Some features are missing? Follow these steps and you will have them!</string>
-    <string name="card_selection_title">UI type</string>
-    <string name="card_selection_desc">Choose one of the available UI types </string>
-    <string name="card_edit_title">Fill required fields</string>
-    <string name="card_edit_desc">These will be used to retrieve and apply values</string>
-    <string name="list_path">File Path</string>
-    <string name="card_name">UI Name</string>
-    <string name="card_name_desc">The interface title, for example \'Max frequency\'</string>
-    <string name="card_summary">UI Summary</string>
-    <string name="card_summary_desc">The interface summary, for example \'set max frequency\'</string>
-    <string name="list_path_desc">The file where values will be pushed</string>
-    <string name="list_path_entries">Entries Path</string>
-    <string name="list_path_entries_desc">The file where is stored the list of applicable values</string>
-    <string name="list_entries_separator">List separator</string>
-    <string name="list_entries_separator_desc">Character used as separator for example \",\" or\n \" \"(space)</string>
-    <string name="card_value_on">Value ON</string>
-    <string name="card_value_on_desc">The value set when switch is on</string>
-    <string name="card_value_off">Value OFF</string>
-    <string name="card_value_off_desc">The value set when switch is off</string>
+    <!-- PER-APP -->
+    <string name="per_app_list">Enabled Apps</string>
+    <string name="per_app_profiles">Profiles available</string>
+    
+    <string-array name="per_app_titles">
+        <item>Apps</item>
+        <item>Profiles</item>
+    </string-array>
 </resources>

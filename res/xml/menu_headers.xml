@@ -28,5 +28,13 @@
             android:key="key_kernel"
             android:title="@string/header_kernel" />
     </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
+    <com.dsht.kerneltweaker.widgets.GreenPreferenceCategory 
+        android:key="key_header_modes"
+        android:title="@string/header_apps" >
+        <com.dsht.kerneltweaker.widgets.MenuPreference
+            android:icon="@drawable/beaker"
+            android:key="key_perapp"
+            android:title="@string/header_perapp" />
+        </com.dsht.kerneltweaker.widgets.GreenPreferenceCategory>
 
 </PreferenceScreen>

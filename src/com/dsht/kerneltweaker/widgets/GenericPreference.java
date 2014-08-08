@@ -380,6 +380,10 @@ public class GenericPreference extends Preference{
     public boolean isCustomCommand() {
         return this.isCustomCommand;
     }
+    
+    public void saveToPrefs() {
+        this.persistString(mValue);
+    }
 
 
 }

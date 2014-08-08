@@ -13,5 +13,6 @@
     <color name="darktheme_card">#2d2d2d</color>
     <color name="card_pressed_dark">#3F3F3F</color>
     <color name="dark_bg">#434341</color>
+    <color name="background_tab_pressed">#73d6d6d6</color>
 
 </resources>

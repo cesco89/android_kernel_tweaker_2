@@ -1,0 +1,57 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/help_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/holo_red_dark"
+    android:divider="?android:dividerHorizontal"
+    android:showDividers="middle"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
+    tools:ignore="Overdraw">
+
+    <TextView
+        android:id="@+id/warning_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="8dp"
+        android:text="@string/per_app_help_text"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:divider="?android:dividerVertical"
+        android:measureWithLargestChild="true"
+        android:showDividers="middle"
+        android:baselineAligned="false">
+
+        <FrameLayout
+            android:id="@+id/open_accessibility"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@android:style/Widget.Holo.Button.Borderless.Small">
+
+            <TextView
+                style="@android:style/Widget.Holo.Button.Borderless.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:clickable="false"
+                android:drawablePadding="8dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:drawableStart="@drawable/ic_action_av_add_to_queue"
+                android:text="@string/per_app_enable_service" />
+
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

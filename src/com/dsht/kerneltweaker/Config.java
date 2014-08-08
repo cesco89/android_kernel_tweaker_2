@@ -14,17 +14,19 @@ import android.preference.PreferenceManager;
 public class Config {
 
     private static Config mConfig;
-    private ArrayList<OnConfigChangedListener> mListeners;
     private Context mContext;
     private Category mBootCategory;
     public static final String FRAGMENT_TAG = "fragment";
-    public static final String MAKER_TYPE = "maker_type";
-    public static final int MAKER_TYPE_MAKE = 0;
-    public static final int MAKER_TYPE_EDIT = 1;
-    public static final String HEADER = "--header--";
     
     public static final String BROADCAST_INTENT = "com.dsht.kerneltweaker.APPLICATION_START";
     public static final String BROADCAST_EXTRA_KEY = "extra_key_send";
+    
+    public static final String BUNDLE_PROFILE_NAME = "name";
+    public static final String BUNDLE_PROFILE_MAX = "max_freq";
+    public static final String BUNDLE_PROFILE_MIN = "min_freq";
+    public static final String BUNDLE_PROFILE_GOVERNOR = "governor";
+    
+    public static final String PERAPP_SERVICE_ID = "com.dsht.kerneltweaker/.services.PerAppService";
     
     
     //EXTRAS DATA 
@@ -114,6 +116,7 @@ public class Config {
     public static final String KEY_HEADER_STATS = "key_header_stats";
     public static final String KEY_HEADER_DEVICE = "key_header_device";
     public static final String KEY_HEADER_CUSTOM = "key_header_custom";
+    public static final String KEY_PERAPP = "key_perapp";
 
     //CPU FRAGMENT
     public static final String KEY_CPU_MAX_FREQ = "key_cpu_max_freq";
@@ -141,12 +144,19 @@ public class Config {
     public static final String KEY_READ_AHEAD = "key_read_ahead";
     public static final String KEY_FCHARGE = "key_fcharge";
     public static final String KEY_TCP = "key_tcp";
+    public static final String KEY_KERNEL_CATEGORY_LOG = "key_kernel_logging";
     public static final String KEY_KERNEL_CATEGORY_IO = "key_kernel_io";
     public static final String KEY_KERNEL_CATEGORY_POWER = "key_kernel_power";
     public static final String KEY_KERNEL_CATEGORY_NET = "key_kernel_net";
     public static final String KEY_TEMP_THRESHOLD = "key_temp_threshold";
     public static final String KEY_KERNEL_CATEGORY_FEATURES ="key_kernel_features";
     public static final String KEY_INTELLIPLUG = "key_intelliplug";
+    
+    
+    //PER-APP
+    public static final String KEY_CPU_MAX_FREQ_PROFILE = "key_cpu_max_freq_profile";
+    public static final String KEY_CPU_MIN_FREQ_PROFILE = "key_cpu_min_freq_profile";
+    public static final String KEY_CPU_GOVERNOR_PROFILE = "key_cpu_governor_profile";
 
     //CPU VALUES
     private String mCpuMaxFreq;
@@ -190,10 +200,10 @@ public class Config {
     }
 
     void init(Context context) {
+        mContext = context;
         mConfig = new Config();
         SharedPreferences prefs = getSharedPreferences(context);
         Resources res = context.getResources();
-        mListeners = new ArrayList<OnConfigChangedListener>();
         mBootCategory = new DatabaseHelpers().saveCategory(1,BOOT_TABLE);
 
         mCpuMaxFreq = prefs.getString(KEY_CPU_MAX_FREQ, 
@@ -284,14 +294,23 @@ public class Config {
     }
     
     public String getCurrentMaxFreq() {
+        if(curMaxFreq == null) {
+            return curMaxFreq = Helpers.readOneLine(MAX_FREQ_FILE);
+        }
         return this.curMaxFreq;
     }
     
     public String getCurrentMinFreq() {
+        if(curMinFreq == null) {
+            return curMinFreq = Helpers.readOneLine(MIN_FREQ_FILE);
+        }
         return this.curMinFreq;
     }
     
     public String getCurrentGovernor() {
+        if(curGovernor == null) {
+            return curMaxFreq = Helpers.readOneLine(GOVERNOR_FILE);
+        }
         return this.curGovernor;
     }
     
@@ -330,7 +349,7 @@ public class Config {
         return this.mLogcatValue;
     }
 
-    private void saveOption(Context context, String key, Object value,
+    public void saveOption(Context context, String key, Object value,
             OnConfigChangedListener listener, boolean changed) {
         if (!changed) {
             // Don't update preferences if this change is a lie.
@@ -349,16 +368,6 @@ public class Config {
         }else throw new IllegalArgumentException("Unknown option type.");
         editor.commit();
 
-        mContext = context;
-        notifyConfigChanged(key, value, listener);
-        mContext = null;
-    }
-
-    private void notifyConfigChanged(String key, Object value, OnConfigChangedListener listener) {
-        for (OnConfigChangedListener l : mListeners) {
-            if (l == listener) continue;
-            l.onConfigChanged(this, key, value);
-        }
     }
 
     public SharedPreferences getSharedPreferences(Context c) {
@@ -369,19 +378,20 @@ public class Config {
         public void onConfigChanged(Config config, String key, Object value);
     }
 
-    public void addOnConfigChangedListener(OnConfigChangedListener listener) {
-        mListeners.add(listener);
-    }
-
-    public void removeOnConfigChangedListener(OnConfigChangedListener listener) {
-        mListeners.remove(listener);
-    }
 
     public Category getBootCategory() {
         if(mBootCategory != null) {
             return mBootCategory;
         }
         return new DatabaseHelpers().saveCategory(1,BOOT_TABLE);
+    }
+    
+    public String[] getArray(int resID) {
+        return mContext.getResources().getStringArray(resID);
+    }
+    
+    public int getColor(int resID) {
+        return mContext.getResources().getColor(resID);
     }
 
 }

@@ -1,0 +1,16 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <com.dsht.kerneltweaker.widgets.ListPreference
+        android:key="key_cpu_max_freq_profile"
+        android:summary="@string/cpu_max_freq_desc"
+        android:title="@string/cpu_max_freq_title" />
+    <com.dsht.kerneltweaker.widgets.ListPreference
+        android:key="key_cpu_min_freq_profile"
+        android:summary="@string/cpu_min_freq_desc"
+        android:title="@string/cpu_min_freq_title" />
+    <com.dsht.kerneltweaker.widgets.ListPreference
+        android:key="key_cpu_governor_profile"
+        android:summary="@string/cpu_governor_desc"
+        android:title="@string/cpu_governor_title" />
+
+</PreferenceScreen>

@@ -34,6 +34,9 @@
         <activity
             android:name="com.dsht.kerneltweaker.activities.ParamsActivity"
             android:label="@string/app_name" />
+        <activity
+            android:name="com.dsht.kerneltweaker.activities.ProfilePreferenceActivity"
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="AA_DB_NAME"

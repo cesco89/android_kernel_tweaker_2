@@ -34,6 +34,17 @@ public class DatabaseHelpers {
         return uItem;
     }
     
+    public Profile saveProfile(String name, String max, String min, String gov) {
+        Profile mProfile = new Profile(name, max, min, gov);
+        mProfile.save();
+        return mProfile;
+    }
+    
+    public AppProfile saveAppProfile(String packageName, Profile profile) {
+        AppProfile mApp = new AppProfile(packageName, profile);
+        mApp.save();
+        return mApp;
+    }
     
 
     public List<Item> getAllItems(Category category) {
@@ -65,6 +76,20 @@ public class DatabaseHelpers {
         .orderBy("Name ASC")
         .execute();
     }
+    
+    public List<Profile> getAllProfiles() {
+        return new Select()
+        .from(Profile.class)
+        .orderBy("Name ASC")
+        .execute();
+    }
+    
+    public List<AppProfile> getAllAppProfiles() {
+        return new Select()
+        .from(AppProfile.class)
+        .orderBy("PackageName ASC")
+        .execute();
+    }
 
     public Item getItemByName(String name) {
         return new Select()
@@ -73,42 +98,18 @@ public class DatabaseHelpers {
         .executeSingle();
     }
     
-    public List<UserItem> getUserItemsWithHeader(Context c) {
-        List<UserItem> list = new ArrayList<UserItem>();
-        UserItem header0 = new UserItem();
-        header0.name = c.getResources().getString(R.string.radio_list);
-        header0.summary = Config.HEADER;
-        UserItem header1 = new UserItem();
-        header1.name = c.getResources().getString(R.string.radio_edit);
-        header1.summary = Config.HEADER;
-        UserItem header2 = new UserItem();
-        header2.name = c.getResources().getString(R.string.radio_switch);
-        header2.summary = Config.HEADER;
-        UserItem header3 = new UserItem();
-        header3.name = c.getResources().getString(R.string.radio_checkbox);
-        header3.summary = Config.HEADER;
-        List<UserItem> items0 = getAllUserItems(0);
-        List<UserItem> items1 = getAllUserItems(1);
-        List<UserItem> items2 = getAllUserItems(2);
-        List<UserItem> items3 = getAllUserItems(3);
-        if(items0.size() != 0) {
-            list.add(header0);
-            list.addAll(items0);
-        }
-        if(items1.size() != 0) {
-            list.add(header1);
-            list.addAll(items1);
-        }
-        if(items2.size() != 0) {
-            list.add(header2);
-            list.addAll(items2);
-        }
-        if(items3.size() != 0) {
-            list.add(header3);
-            list.addAll(items3);
-        }
-        
-        return list;
+    public Profile getProfileByName(String name) {
+        return new Select()
+        .from(Profile.class)
+        .where("Name = ?", name)
+        .executeSingle();
+    }
+    
+    public AppProfile getAppProfileByName(String packageName) {
+        return new Select()
+        .from(AppProfile.class)
+        .where("PackageName = ?", packageName)
+        .executeSingle();
     }
 
     public void deleteCategory(String categoryName) {
@@ -123,5 +124,16 @@ public class DatabaseHelpers {
         String name = item.name;
         new Delete().from(UserItem.class).where("Name = ?", name).execute();
     }
+    
+    public void deleteProfile(Profile mProfile) {
+        String name = mProfile.name;
+        new Delete().from(Profile.class).where("Name = ?", name).execute();
+    }
+    
+    public void deleteAppProfile(AppProfile mApp){
+        String packName = mApp.packageName;
+        new Delete().from(AppProfile.class).where("PackageName = ?", packName).execute();
+    }
+    
 
 }
