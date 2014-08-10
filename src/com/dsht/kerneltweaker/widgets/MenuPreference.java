@@ -33,18 +33,14 @@ public class MenuPreference extends Preference {
     
     @Override
     public void onBindView(View view) {
-        super.onBindView(view);
-        
+        super.onBindView(view); 
         TextView title = (TextView) view.findViewById(android.R.id.title);
         TextView summary = (TextView) view.findViewById(android.R.id.summary);
         ImageView icon = (ImageView) view.findViewById(android.R.id.icon);
         icon.setColorFilter(Color.WHITE);
         
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Condensed.ttf");
-        Typeface tf2 = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Thin.ttf");
-        
-        title.setTypeface(tf);
-        summary.setTypeface(tf2);
+        title.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Condensed.ttf"));
+        summary.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Thin.ttf"));
         
         
         

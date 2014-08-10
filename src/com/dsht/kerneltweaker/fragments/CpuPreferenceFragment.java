@@ -60,7 +60,6 @@ public class CpuPreferenceFragment extends ObservablePreferenceFragment implemen
         mCoreCategory = (GreenPreferenceCategory) findPreference(Config.KEY_CORES_CATEGORY);
         mAdvancedCategory = (GreenPreferenceCategory) findPreference(Config.KEY_CPU_ADVANCED_CATEGORY);
 
-
         mCpuMax.setSummary((Integer.parseInt(mConfig.getCurrentMaxFreq())/1000)+ " Mhz");
         mCpuMin.setSummary((Integer.parseInt(mConfig.getCurrentMinFreq())/1000)+ " Mhz");
         mCpuGovernor.setSummary(mConfig.getCurrentGovernor());

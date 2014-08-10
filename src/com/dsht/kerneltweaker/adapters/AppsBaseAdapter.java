@@ -88,6 +88,11 @@ public class AppsBaseAdapter extends BaseAdapter {
     public void update() {
         reloadList();
     }
+    
+    public void clear(){
+        mInstalledAppInfo = null;
+        mInstalledApps = null;
+    }
 
     @Override
     public int getCount() {

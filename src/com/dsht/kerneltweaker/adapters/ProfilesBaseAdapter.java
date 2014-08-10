@@ -24,14 +24,12 @@ public class ProfilesBaseAdapter extends BaseAdapter {
     private List<Profile> mProfiles;
     private Context mContext;
     private UiHelpers mUiHelpers;
-    private boolean[] states;
 
     public ProfilesBaseAdapter(Context con, List<Profile> profiles) {
         // TODO Auto-generated constructor stub
         this.mContext = con;
         this.mProfiles = profiles;
         this.mUiHelpers = new UiHelpers(con);
-        this.states = new boolean[mProfiles.size()];
     }
 
     @Override
@@ -83,6 +81,7 @@ public class ProfilesBaseAdapter extends BaseAdapter {
                b.putString(Config.BUNDLE_PROFILE_MIN, mProfile.minFreq);
                b.putString(Config.BUNDLE_PROFILE_GOVERNOR, mProfile.governor);
                mUiHelpers.startActivity((Activity) mContext, ProfilePreferenceActivity.class, b);
+               b = null;
             }
             
         });

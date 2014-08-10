@@ -56,12 +56,11 @@ public class Helpers {
         //setPermissions(FREQ_FILE);
         File freqfile = new File(FREQ_FILE);
         FileInputStream fin1 = null;
-        String s1 = null;
+        byte fileContent[] = null;
         try {
             fin1 = new FileInputStream(freqfile);
-            byte fileContent[] = new byte[(int)freqfile.length()];
+            fileContent = new byte[(int)freqfile.length()];
             fin1.read(fileContent);
-            s1 = new String(fileContent);
         }
         catch (FileNotFoundException e1) {
             //System.out.println("File not found" + e1);
@@ -79,12 +78,7 @@ public class Helpers {
                 //System.out.println("Error while closing stream: " + ioe1);
             }
         }
-        if(s1 != null) {
-            String[] frequencies = s1.trim().split(" ");
-            return frequencies;
-        } else {
-            return error;
-        }
+        return new String(fileContent).trim().split(" ");
     }
     /*
     public static void setPermissions(String file) {
@@ -292,12 +286,11 @@ public class Helpers {
             //setPermissions(file);
             File freqfile = new File(file);
             FileInputStream fin1 = null;
-            String s1 = null;
+            byte fileContent[] = null;
             try {
                 fin1 = new FileInputStream(freqfile);
-                byte fileContent[] = new byte[(int)freqfile.length()];
+                fileContent = new byte[(int)freqfile.length()];
                 fin1.read(fileContent);
-                s1 = new String(fileContent);
             }
             catch (FileNotFoundException e1) {
                 //System.out.println("File not found" + e1);
@@ -315,32 +308,25 @@ public class Helpers {
                     //System.out.println("Error while closing stream: " + ioe1);
                 }
             }
-            if(s1 != null) {
-                String[] frequencies = s1.trim().split(" ");
-                for(String s : frequencies) {
-                    int conv = (Integer.parseInt(s) / how);
-                    names.add(conv + " Mhz");
-                }
-                String[] toMhz = new String[names.size()];
-                toMhz = names.toArray(toMhz);
-                return toMhz;
-            }else {
-                return error;
+            for(String s : new String(fileContent).trim().split(" ")) {
+                names.add((Integer.parseInt(s) / how) + " Mhz");
             }
+            String[] toMhz = new String[names.size()];
+            return names.toArray(toMhz);
         }
         return null;
     }
 
+    @SuppressWarnings("unused")
     public static String[] getGovernors() {
         //setPermissions(GOVERNOR_FILE);
         File govfile = new File(GOVERNOR_FILE);
         FileInputStream fin = null;
-        String s = null;
+        byte fileContent[] = null;
         try {
             fin = new FileInputStream(govfile);
-            byte fileContent[] = new byte[(int)govfile.length()];
+            fileContent = new byte[(int)govfile.length()];
             fin.read(fileContent);
-            s = new String(fileContent);
         }
         catch (FileNotFoundException e) {
         }
@@ -355,20 +341,13 @@ public class Helpers {
                 //System.out.println("Error while closing stream: " + ioe);
             }
         }
-        if(s != null) {
-            String[] governors = s.trim().split(" ");
-            return governors;
-        }else {
-            return error;
-        }
+        return new String(fileContent).trim().split(" ");
     }
     @Deprecated
     public static String[] getUvTableNames() {
         ArrayList<String> Tokens = new ArrayList<String>();
 
         try {
-            // Open the file that is the first
-            // command line parameter
             FileInputStream fstream = null;
             File f = new File("/sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels");
             if(f.exists()) {
@@ -401,8 +380,7 @@ public class Helpers {
             System.err.println("Error: " + e.getMessage());
         }
         String[] names = new String[Tokens.size()-1];
-        names = Tokens.toArray(names);
-        return names;
+        return Tokens.toArray(names);
     }
 
 
@@ -608,12 +586,11 @@ public class Helpers {
         //setPermissions(file.getAbsolutePath());
         FileInputStream fin = null;
         //Log.d("FILE", file.getAbsolutePath());
-        String s = null;
+        byte fileContent[] = null;
         try {
             fin = new FileInputStream(file);
-            byte fileContent[] = new byte[(int)file.length()];
+            fileContent = new byte[(int)file.length()];
             fin.read(fileContent);
-            s = new String(fileContent);
         }
         catch (FileNotFoundException e) {
         }
@@ -624,18 +601,14 @@ public class Helpers {
             try {
                 if(fin != null) {
                     fin.close();
+                    fin = null;
                 }
             }
             catch (IOException ioe) {
                 //System.out.println("Error while closing stream: " + ioe);
             }
         }
-        if(s == null) {
-            s=" ";
-        } else {
-            s = s.split("\n")[0];
-        }
-        return s;
+        return new String(fileContent).split("\n")[0];
     }
 
     public static void waitForMillis(final int millis, Context context) {
@@ -675,6 +648,7 @@ public class Helpers {
                 if (br != null) {
                     try {
                         br.close();
+                        br = null;
                     } catch (IOException ignored) {
                         // failed to close reader
                     }

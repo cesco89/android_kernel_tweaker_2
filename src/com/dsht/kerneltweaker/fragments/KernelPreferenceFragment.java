@@ -169,6 +169,15 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
         super.onResume();
         this.getListener().onComplete();
     }
+    
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        mAvailableSchedGovs = null;
+        mReadAheadEntries = null;
+        mReadAheadValues = null;
+        mTcpAvailable = null;
+    }
 
     private void checkCategories() {
         if(mLogCategory.getPreferenceCount() == 0) {

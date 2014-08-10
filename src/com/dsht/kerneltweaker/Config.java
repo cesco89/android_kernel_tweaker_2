@@ -17,24 +17,24 @@ public class Config {
     private Context mContext;
     private Category mBootCategory;
     public static final String FRAGMENT_TAG = "fragment";
-    
+
     public static final String BROADCAST_INTENT = "com.dsht.kerneltweaker.APPLICATION_START";
     public static final String BROADCAST_EXTRA_KEY = "extra_key_send";
-    
+
     public static final String BUNDLE_PROFILE_NAME = "name";
     public static final String BUNDLE_PROFILE_MAX = "max_freq";
     public static final String BUNDLE_PROFILE_MIN = "min_freq";
     public static final String BUNDLE_PROFILE_GOVERNOR = "governor";
-    
+
     public static final String PERAPP_SERVICE_ID = "com.dsht.kerneltweaker/.services.PerAppService";
-    
-    
+
+
     //EXTRAS DATA 
     public static final String EXTRA_FILES_DIR = "extra_file_dir";
-    
+
     //ROOT PREFERENCE SCREEN
     public static final String KEY_ROOT = "key_root";
-    
+
 
     //BOOT TABLE
     public static final String BOOT_TABLE="Boot_Table";
@@ -43,7 +43,7 @@ public class Config {
     public static final int TYPE_VDD = 0;
     public static final int TYPE_UV_MV_TABLE = 1;
     public static final int TYPE_NOT_FOUND = -1;
-    
+
     //CPU Fragment files
     public static final String CPU_FREQ_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies";
     public static final String MAX_FREQ_FILE = "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
@@ -68,8 +68,8 @@ public class Config {
     public static final String GPU_MAX_FREQ_FILE = "/sys/class/kgsl/kgsl-3d0/max_gpuclk";
     public static final String GPU_UP_THRESHOLD = "/sys/module/msm_kgsl_core/parameters/up_threshold";
     public static final String GPU_DOWN_THRESHOLD = "/sys/module/msm_kgsl_core/parameters/down_threshold";
-    
-    
+
+
     //UNDERVOLT
     public static final String VDD_TABLE_PATH = "/sys/devices/system/cpu/cpufreq/vdd_table/vdd_levels";
     public static final String UV_TABLE_PATH = "/sys/devices/system/cpu/cpu0/cpufreq/UV_mV_table";
@@ -131,12 +131,12 @@ public class Config {
     public static final String KEY_CPU_MPDEC = "key_mpdec";
     public static final String KEY_CORES_CATEGORY ="key_cores_category";
     public static final String KEY_CPU_ADVANCED_CATEGORY="key_advanced_category";
-    
+
     //GPU FRAGMENT
     public static final String KEY_GPU_MAX_FREQ = "key_gpu_max_freq";
     public static final String KEY_GPU_UP_THRESHOLD = "key_gpu_up_threshold";
     public static final String KEY_GPU_DOWN_THRESHOLD = "key_gpu_down_threshold";
-    
+
     //KERNEL FRAGMENT
     public static final String KEY_LOGCAT = "key_logcat";
     public static final String KEY_FSYNC = "key_fsync";
@@ -151,41 +151,17 @@ public class Config {
     public static final String KEY_TEMP_THRESHOLD = "key_temp_threshold";
     public static final String KEY_KERNEL_CATEGORY_FEATURES ="key_kernel_features";
     public static final String KEY_INTELLIPLUG = "key_intelliplug";
-    
-    
+
+
     //PER-APP
     public static final String KEY_CPU_MAX_FREQ_PROFILE = "key_cpu_max_freq_profile";
     public static final String KEY_CPU_MIN_FREQ_PROFILE = "key_cpu_min_freq_profile";
     public static final String KEY_CPU_GOVERNOR_PROFILE = "key_cpu_governor_profile";
 
-    //CPU VALUES
-    private String mCpuMaxFreq;
-    private String mCpuMinFreq;
-    private String mCpuGovernor;
-    
-    private String[] mCpuFreqValues;
-    private String[] mCpuFreqEntries;
-    private String[] mCpuGovernors;
-    private String curMaxFreq;
-    private String curMinFreq;
-    private String curGovernor;
-    
-    //CPU VALUES
-    private String mGpuMaxFreq;
-    private String mGpuUpThreshold;
-    private String mGpuDownThreshold;
-    private String[] mGpuEntries;
-    private String[] mGpuValues;
-    
-    //UV
-    private ArrayList<String> uvValues = new ArrayList<String>();
-    private String uvPath;
-    private int UvType;
-    
-    
+
     //KERNEL
     private String mLogcatValue;
-    
+
 
 
     private Config() {
@@ -206,145 +182,61 @@ public class Config {
         Resources res = context.getResources();
         mBootCategory = new DatabaseHelpers().saveCategory(1,BOOT_TABLE);
 
-        mCpuMaxFreq = prefs.getString(KEY_CPU_MAX_FREQ, 
-                res.getString(R.string.cpu_max_freq_desc));
-        mCpuMinFreq = prefs.getString(KEY_CPU_MIN_FREQ, 
-                res.getString(R.string.cpu_min_freq_desc));
-        mCpuGovernor = prefs.getString(KEY_CPU_GOVERNOR, 
-                res.getString(R.string.cpu_governor_desc));
-
-    }
-    
-    
-    public void load() {
-        class LoadData extends AsyncTask<Void, Void, Void> {
-
-            @Override
-            protected Void doInBackground(Void... arg0) {
-                // TODO Auto-generated method stub
-                mCpuFreqValues = Helpers.getFrequencies();
-                mCpuFreqEntries = Helpers.getFreqToMhz(CPU_FREQ_FILE, 1000);
-                mCpuGovernors = Helpers.getGovernors();
-                curMaxFreq = Helpers.readOneLine(MAX_FREQ_FILE);
-                curMinFreq = Helpers.readOneLine(MIN_FREQ_FILE);
-                curGovernor = Helpers.readOneLine(GOVERNOR_FILE);
-                mGpuMaxFreq = Helpers.readOneLine(GPU_MAX_FREQ_FILE);
-                mGpuUpThreshold = Helpers.readOneLine(GPU_UP_THRESHOLD);
-                mGpuDownThreshold = Helpers.readOneLine(GPU_DOWN_THRESHOLD);
-                mGpuEntries = Helpers.getFreqToMhz(GPU_FREQUENCIES_FILE, 1000000);
-                String gpuFreqs =  Helpers.readOneLine(GPU_FREQUENCIES_FILE);
-                if(gpuFreqs != null) {
-                   mGpuValues = gpuFreqs.split("\\w+");
-                }
-                uvPath = Helpers.checkUVTableType();
-                
-                mLogcatValue = Helpers.readOneLine(LOGCAT);
-                return null;
-            }
-            
-        }
-        new LoadData().execute();
-        
-    }
-
-
-    /////////////////
-    // - SETTERS - //
-    /////////////////
-
-    public void setCpuMaxFreq(Context context, String value, OnConfigChangedListener listener) {
-        saveOption(context, KEY_CPU_MAX_FREQ, value, listener, mCpuMaxFreq != (mCpuMaxFreq = value));
-    }
-
-    public void setCpuMinFreq(Context context, String value, OnConfigChangedListener listener) {
-        saveOption(context, KEY_CPU_MIN_FREQ, value, listener, mCpuMinFreq != (mCpuMinFreq = value));
-    }
-
-    public void setCpuGovernor(Context context, String value, OnConfigChangedListener listener) {
-        saveOption(context, KEY_CPU_GOVERNOR, value, listener, mCpuGovernor != (mCpuGovernor = value));
     }
 
 
     /////////////////
     // - GETTERS - //
     /////////////////
-    
-    public String getCpuMaxFreq() {
-        return this.mCpuMaxFreq;
-    }
-    
-    public String getCpuMinFreq() {
-        return this.mCpuMinFreq;
-    }
-    
-    public String getCpuGovernor() {
-        return this.mCpuGovernor;
-    }
-    
+
     public String[] getCpuFreqValues() {
-        return this.mCpuFreqValues;
+        return Helpers.getFrequencies();
     }
-    
+
     public String[] getCpuFreqEntries() {
-        return this.mCpuFreqEntries;
+        return Helpers.getFreqToMhz(CPU_FREQ_FILE, 1000);
     }
-    
+
     public String[] getCpuGovernors() {
-        return this.mCpuGovernors;
+        return Helpers.getGovernors();
     }
-    
+
     public String getCurrentMaxFreq() {
-        if(curMaxFreq == null) {
-            return curMaxFreq = Helpers.readOneLine(MAX_FREQ_FILE);
-        }
-        return this.curMaxFreq;
+        return Helpers.readOneLine(MAX_FREQ_FILE);
     }
-    
+
     public String getCurrentMinFreq() {
-        if(curMinFreq == null) {
-            return curMinFreq = Helpers.readOneLine(MIN_FREQ_FILE);
-        }
-        return this.curMinFreq;
+        return Helpers.readOneLine(MIN_FREQ_FILE);
     }
-    
+
     public String getCurrentGovernor() {
-        if(curGovernor == null) {
-            return curMaxFreq = Helpers.readOneLine(GOVERNOR_FILE);
-        }
-        return this.curGovernor;
+        return Helpers.readOneLine(GOVERNOR_FILE);
     }
-    
+
     public String getCurrentGpuMaxFreq() {
-        return this.mGpuMaxFreq;
+        return Helpers.readOneLine(GPU_MAX_FREQ_FILE);
     }
-    
+
     public String getCurrentUpThreshold() {
-        return this.mGpuUpThreshold;
+        return Helpers.readOneLine(GPU_UP_THRESHOLD);
     }
-    
+
     public String getCurrentDownThreshold() {
-        return this.mGpuDownThreshold;
+        return Helpers.readOneLine(GPU_DOWN_THRESHOLD);
     }
-    
+
     public String[] getGpuEntries() {
-        return this.mGpuEntries;
+        return Helpers.getFreqToMhz(GPU_FREQUENCIES_FILE, 1000000);
     }
-    
+
     public String[] getGpuValues() {
-        return this.mGpuValues;
+        return Helpers.readOneLine(GPU_FREQUENCIES_FILE).split("\\w+");
     }
-    
-    public ArrayList<String> getUvValuesList() {
-        return this.uvValues;
-    }
-    
+
     public String getUvPath() {
-        if(uvPath == null) {
-            return Helpers.checkUVTableType();
-        }
-        return this.uvPath;
+        return Helpers.checkUVTableType();
     }
-    
+
     public String getLogcatValue() {
         return this.mLogcatValue;
     }
@@ -385,11 +277,11 @@ public class Config {
         }
         return new DatabaseHelpers().saveCategory(1,BOOT_TABLE);
     }
-    
+
     public String[] getArray(int resID) {
         return mContext.getResources().getStringArray(resID);
     }
-    
+
     public int getColor(int resID) {
         return mContext.getResources().getColor(resID);
     }

@@ -84,7 +84,6 @@ public class UiHelpers {
         this.mCMD = new CMDHelpers();
         this.mInflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mDb = new DatabaseHelpers();
-        mConfig.load();
     }
     /**
      * 
@@ -100,7 +99,8 @@ public class UiHelpers {
     public AlertDialog buildListPreferenceDialog(final GenericPreference pref, final String[] entries, final String[] values) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle(null);
-        View v = mInflater.inflate(R.layout.list_preference_dialog_layout, null, false);
+        View v = null;
+        v = mInflater.inflate(R.layout.list_preference_dialog_layout, null, false);
         ListView list = (ListView) v.findViewById(R.id.list);
         final ListPreferenceBaseAdapter mAdapter = new ListPreferenceBaseAdapter(mContext, entries, pref.getSummary().toString());
         Log.d("PREF", pref.getSummary().toString());
@@ -392,11 +392,7 @@ public class UiHelpers {
 
     public void loadFragment(Fragment frag) {
         FragmentManager fm = ((Activity)mContext).getFragmentManager();
-        Fragment old = fm.findFragmentByTag(Config.FRAGMENT_TAG);
-        if(old != null) {
-            fm.beginTransaction()
-            .remove(old);
-        }
+        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         fm.beginTransaction()
         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         .replace(R.id.container, frag, Config.FRAGMENT_TAG)
