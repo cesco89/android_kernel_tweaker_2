@@ -63,6 +63,12 @@ public class GpuPreferenceFragment extends ObservablePreferenceFragment {
         this.getListener().onComplete();
     }
     
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.getPreferenceScreen().removeAll();
+    }
+    
     public void addEmptyPreference() {
         GenericPreference pref = new GenericPreference(getActivity());
         pref.hideBoot(true);

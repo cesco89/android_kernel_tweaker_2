@@ -23,8 +23,7 @@ public class PerAppBroadcastReceiver extends BroadcastReceiver{
         if(!intent.getAction().equals(Config.BROADCAST_INTENT) || intent.getExtras().getString(Config.BROADCAST_EXTRA_KEY) == null) {
             return;
         }
-        Bundle b = intent.getExtras();
-        String received = b.getString(Config.BROADCAST_EXTRA_KEY);
+        String received = intent.getExtras().getString(Config.BROADCAST_EXTRA_KEY);
         if(!received.equals(curPackage) && !received.equals("com.android.systemui")){
             Log.d("RECEIVER", "new package received");
             curPackage = received;
@@ -33,6 +32,7 @@ public class PerAppBroadcastReceiver extends BroadcastReceiver{
         }else{
             Log.d("RECEIVER", "nothing to do");
         }
+        received = null;
 
     }
 

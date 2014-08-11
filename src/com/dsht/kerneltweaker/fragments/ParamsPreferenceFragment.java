@@ -44,6 +44,12 @@ public class ParamsPreferenceFragment extends ObservablePreferenceFragment {
     
     
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.getPreferenceScreen().removeAll();
+    }
+    
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setRetainInstance(true);

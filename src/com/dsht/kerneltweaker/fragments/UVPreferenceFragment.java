@@ -13,6 +13,7 @@ import com.dsht.kerneltweaker.utils.UvItem;
 import com.dsht.kerneltweaker.widgets.EditPreference;
 import com.dsht.kerneltweaker.widgets.GenericPreference;
 import com.dsht.kerneltweaker.widgets.ObservablePreferenceFragment;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceScreen;
@@ -69,6 +70,12 @@ public class UVPreferenceFragment extends ObservablePreferenceFragment implement
         mCancel.setOnClickListener(this);
 
         return v;
+    }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.getPreferenceScreen().removeAll();
     }
 
     @Override

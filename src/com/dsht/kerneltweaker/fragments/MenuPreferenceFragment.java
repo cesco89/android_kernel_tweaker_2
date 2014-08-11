@@ -70,6 +70,12 @@ public class MenuPreferenceFragment extends PreferenceFragment implements OnPref
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.getPreferenceScreen().removeAll();
+    }
+    
+    @Override
     public boolean onPreferenceClick(Preference pref) {
         // TODO Auto-generated method stub
         Fragment f = null;

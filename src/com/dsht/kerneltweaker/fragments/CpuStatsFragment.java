@@ -418,8 +418,7 @@ public class CpuStatsFragment extends ObservableFragment implements Constants {
                         }
                         freqs.add(curFreq);
                     }
-                    String[] freqArray = freqs.toArray(new String[freqs.size()]);
-                    mCurCPUHandler.sendMessage(mCurCPUHandler.obtainMessage(0, freqArray));
+                    mCurCPUHandler.sendMessage(mCurCPUHandler.obtainMessage(0, freqs.toArray(new String[freqs.size()])));
 
                 }
             } catch (InterruptedException e) {
@@ -474,8 +473,7 @@ public class CpuStatsFragment extends ObservableFragment implements Constants {
 
     protected Handler mCurCPUTempHandler = new Handler() {
         public void handleMessage(Message msg) {
-            String[] tempArray = (String[]) msg.obj;
-            String temp = tempArray[0];
+            String temp = ((String[])msg.obj)[0];
             mCpuTemp.setText(temp+" °C");
         }
 

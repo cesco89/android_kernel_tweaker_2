@@ -138,6 +138,12 @@ public class CpuPreferenceFragment extends ObservablePreferenceFragment implemen
         super.onResume();
         this.getListener().onComplete();
     }
+    
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.getPreferenceScreen().removeAll();
+    }
 
     @Override
     public boolean onPreferenceClick(Preference pref) {

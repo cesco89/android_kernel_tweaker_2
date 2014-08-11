@@ -177,6 +177,7 @@ public class KernelPreferenceFragment extends ObservablePreferenceFragment {
         mReadAheadEntries = null;
         mReadAheadValues = null;
         mTcpAvailable = null;
+        this.getPreferenceScreen().removeAll();
     }
 
     private void checkCategories() {

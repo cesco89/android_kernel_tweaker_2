@@ -9,7 +9,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp" >
+        android:layout_marginRight="12dp"
+        android:divider="@null" >
     </ListView>
 
 </LinearLayout>
