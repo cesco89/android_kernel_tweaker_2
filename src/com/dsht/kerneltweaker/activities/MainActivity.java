@@ -77,12 +77,6 @@ public class MainActivity extends FragmentActivity implements OnCompleteListener
       super.onStop();
       EasyTracker.getInstance(this).activityStop(this);
     }
-    
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        killMe();
-    }
 
     @Override
     public void onComplete() {
@@ -121,10 +115,6 @@ public class MainActivity extends FragmentActivity implements OnCompleteListener
     public void onConfigChanged(Config config, String key, Object value) {
         // TODO Auto-generated method stub
         
-    }
-    
-    private void killMe() {
-        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
 }

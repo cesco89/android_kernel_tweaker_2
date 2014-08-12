@@ -928,17 +928,27 @@ public class Helpers {
     public static void setProfileDefaults(Context context){
         CMDHelpers cmd = new CMDHelpers();
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        String maxFreq = mPrefs.getString(Config.KEY_CPU_MAX_FREQ, "null");
-        String minFreq = mPrefs.getString(Config.KEY_CPU_MIN_FREQ, "null");
-        String governor = mPrefs.getString(Config.KEY_CPU_GOVERNOR, "null");
-        if(!maxFreq.equals(readOneLine(Config.MAX_FREQ_FILE))){
-            cmd.setMulticoreValues(maxFreq, true);
+        boolean maxChanged = mPrefs.getString(Config.KEY_CPU_MAX_FREQ, "null")
+                .equals(readOneLine(Config.MAX_FREQ_FILE)) ? false : true;
+        boolean minChanged = mPrefs.getString(Config.KEY_CPU_MIN_FREQ, "null")
+                .equals(readOneLine(Config.MIN_FREQ_FILE)) ? false : true;
+        boolean govChanged = mPrefs.getString(Config.KEY_CPU_GOVERNOR, "null")
+                .equals(readOneLine(Config.GOVERNOR_FILE)) ? false : true;
+        if(maxChanged){
+            cmd.setMulticoreValues(mPrefs.getString(Config.KEY_CPU_MAX_FREQ, "null"), true);
         }
-        if(!minFreq.equals(readOneLine(Config.MIN_FREQ_FILE))){
-            cmd.setMulticoreValues(minFreq, false);
+        if(minChanged){
+            cmd.setMulticoreValues(mPrefs.getString(Config.KEY_CPU_MIN_FREQ, "null"), false);
         }
-        if(!governor.equals(readOneLine(Config.GOVERNOR_FILE))){
-            cmd.setValuesShell(Config.GOVERNOR_FILE, governor);
+        if(govChanged){
+            cmd.setValuesShell(Config.GOVERNOR_FILE, mPrefs.getString(Config.KEY_CPU_GOVERNOR, "null"));
+        }
+        if(maxChanged || minChanged || govChanged) {
+            Toast.makeText(context, 
+                    R.string.profile_apply_stock, 
+                    Toast.LENGTH_SHORT).show();
+        }else{
+            Log.d("PROFILE DEFAULTS", "Nothing to do");
         }
     }
 

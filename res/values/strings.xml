@@ -31,6 +31,7 @@
     <string name="app_profile_desc">Profile: %s</string>
     <string name="dialog_button_remove">Remove profile for this app</string>
     <string name="profile_apply_confirmed">%s profile successfully applied!</string>
+    <string name="profile_apply_stock">Back to default values!</string>
     <string name="per_app_set_default">Set default profile</string>
     <string name="per_app_enable_service">Enable Per-App service</string>
     <string name="per_app_help_text">Per-App service needs to be enabled!</string>
